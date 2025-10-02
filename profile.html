@@ -1,0 +1,1646 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GECC PROJECT - Mon Profil & Paramètres</title>
+    <link rel="stylesheet" href="styles/header-design.css">
+    
+    <style>
+        /* Style pour le logo PNG */
+        .header .logo-icon {
+            background: transparent !important; /* Enlever le fond violet */
+            box-shadow: none !important; /* Enlever l'ombre */
+        }
+        
+        .header .logo-icon img {
+            width: 32px !important;
+            height: 32px !important;
+            object-fit: contain !important;
+            /* Pas de filtre nécessaire car le PNG a un fond transparent */
+        }
+    </style>
+    <style>
+        :root {
+            /* Système de couleurs premium */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --accent-gradient: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+            --success-gradient: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            --warning-gradient: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            --danger-gradient: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #3b82f6;
+            
+            /* Mode clair */
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --bg-quaternary: #e2e8f0;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --shadow-light: rgba(0, 0, 0, 0.1);
+            --shadow-medium: rgba(0, 0, 0, 0.15);
+            --shadow-heavy: rgba(0, 0, 0, 0.25);
+            --hover-bg: rgba(79, 70, 229, 0.05);
+            
+            /* Espacement */
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --spacing-3xl: 64px;
+            
+            /* Bordures */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 20px;
+            --radius-2xl: 24px;
+            
+            /* Animations */
+            --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            /* Shadows premium */
+            --shadow-glow: 0 0 50px rgba(79, 70, 229, 0.15);
+            --shadow-floating: 0 25px 50px rgba(0, 0, 0, 0.1);
+            --shadow-card: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --bg-quaternary: #475569;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #94a3b8;
+            --border-color: #475569;
+            --shadow-light: rgba(0, 0, 0, 0.3);
+            --shadow-medium: rgba(0, 0, 0, 0.4);
+            --shadow-heavy: rgba(0, 0, 0, 0.6);
+            --hover-bg: rgba(79, 70, 229, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-secondary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            transition: all var(--transition-normal);
+        }
+
+        /* Animation particles de fond */
+        .background-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: rgba(79, 70, 229, 0.3);
+            border-radius: 50%;
+            animation: float 8s infinite linear;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Header général du projet */
+        .header {
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            padding: var(--spacing-md) 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+
+        .logo-img {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-sm);
+        }
+
+        .logo h1 {
+            font-size: 20px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--spacing-lg);
+            align-items: center;
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            transition: all var(--transition-fast);
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        .nav-link.active {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+            font-weight: 600;
+        }
+
+        .admin-link {
+            color: #f59e0b !important;
+        }
+
+        /* Page Title Section */
+        .page-title-section {
+            background: var(--bg-secondary);
+            padding: var(--spacing-xl) 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .page-title-section h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .page-title-section p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin: 0;
+        }
+
+
+
+
+        /* Main Content */
+        .main-content {
+            padding: var(--spacing-2xl) 0;
+            position: relative;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-lg);
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: var(--spacing-xl);
+        }
+
+        .profile-form {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xl);
+        }
+
+        .form-section {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            animation: slideInUp 0.6s ease-out both;
+        }
+
+        [data-theme="dark"] .form-section {
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .form-section:nth-child(1) { animation-delay: 0.1s; }
+        .form-section:nth-child(2) { animation-delay: 0.2s; }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .section-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--secondary-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .section-header h2 {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .label-badge {
+            background: var(--success-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+        }
+
+        .label-badge.readonly {
+            background: var(--text-muted);
+        }
+
+        .form-input {
+            padding: var(--spacing-md) var(--spacing-lg);
+            border: 2px solid var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 15px;
+            font-weight: 500;
+            transition: all var(--transition-normal);
+            outline: none;
+        }
+
+        .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .form-input:disabled {
+            background: var(--bg-tertiary);
+            color: var(--text-muted);
+            cursor: not-allowed;
+        }
+
+        .form-input.error {
+            border-color: var(--danger-color);
+            background: rgba(239, 68, 68, 0.05);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .input-hint {
+            color: var(--text-muted);
+            font-size: 12px;
+            margin-top: var(--spacing-xs);
+        }
+
+        /* File Upload */
+        .file-upload {
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        .file-button {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background: var(--accent-gradient);
+            color: white;
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .file-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-card);
+        }
+
+        .file-name {
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-style: italic;
+        }
+
+        /* Sidebar Profile */
+        .profile-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .profile-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            text-align: center;
+            animation: slideInRight 0.6s ease-out 0.3s both;
+        }
+
+        [data-theme="dark"] .profile-card {
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .profile-avatar {
+            width: 120px;
+            height: 120px;
+            background: var(--secondary-gradient);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 48px;
+            font-weight: bold;
+            margin: 0 auto var(--spacing-lg);
+            box-shadow: var(--shadow-card);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-upload {
+            position: absolute;
+            bottom: -5px;
+            right: -5px;
+            width: 35px;
+            height: 35px;
+            background: var(--success-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border: 3px solid var(--bg-primary);
+            transition: all var(--transition-fast);
+        }
+
+        .avatar-upload:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .profile-role {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 20px;
+            font-weight: 800;
+            background: var(--secondary-gradient);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .activity-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-radius: var(--radius-xl);
+            padding: var(--spacing-xl);
+            box-shadow: var(--shadow-card);
+            border: 1px solid var(--border-color);
+            animation: slideInRight 0.6s ease-out 0.5s both;
+        }
+
+        [data-theme="dark"] .activity-card {
+            background: rgba(30, 41, 59, 0.95);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .activity-icon {
+            width: 32px;
+            height: 32px;
+            background: var(--warning-gradient);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+        }
+
+        .activity-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-md);
+        }
+
+        .activity-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            padding: var(--spacing-md);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border-left: 4px solid var(--info-color);
+        }
+
+        .activity-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--success-color);
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .activity-text {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+
+        .activity-time {
+            color: var(--text-muted);
+            font-size: 11px;
+            margin-left: auto;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-md);
+            justify-content: flex-end;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn {
+            padding: var(--spacing-md) var(--spacing-xl);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            font-size: 14px;
+            transition: all var(--transition-normal);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .btn-secondary {
+            background: var(--bg-tertiary);
+            color: var(--text-secondary);
+            border: 2px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-quaternary);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary {
+            background: var(--secondary-gradient);
+            color: white;
+            box-shadow: var(--shadow-card);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-floating);
+        }
+
+        .btn-danger {
+            background: var(--danger-gradient);
+            color: white;
+            box-shadow: var(--shadow-card);
+        }
+
+        .btn-danger:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-floating);
+        }
+
+
+        /* Theme Controls */
+        .theme-controls {
+            position: fixed;
+            bottom: var(--spacing-lg);
+            right: var(--spacing-lg);
+            display: flex;
+            gap: var(--spacing-sm);
+            z-index: 1000;
+        }
+
+        .control-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            color: var(--text-primary);
+            font-size: 20px;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: var(--shadow-card);
+        }
+
+        [data-theme="dark"] .control-btn {
+            background: rgba(30, 41, 59, 0.9);
+            color: var(--text-primary);
+        }
+
+        .control-btn:hover {
+            transform: scale(1.1);
+            box-shadow: var(--shadow-floating);
+        }
+
+        /* Toast notifications */
+        .toast-container {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .toast {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            padding: var(--spacing-md) var(--spacing-lg);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-floating);
+            border-left: 4px solid var(--info-color);
+            backdrop-filter: blur(10px);
+            animation: slideInToast 0.3s ease-out;
+            max-width: 300px;
+        }
+
+        .toast.success { border-left-color: var(--success-color); }
+        .toast.warning { border-left-color: var(--warning-color); }
+        .toast.error { border-left-color: var(--danger-color); }
+
+        @keyframes slideInToast {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .profile-sidebar {
+                order: -1;
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-tabs {
+                display: none;
+            }
+            
+            .header-content {
+                flex-direction: column;
+                gap: var(--spacing-md);
+            }
+            
+            .page-header-content {
+                flex-direction: column;
+                text-align: center;
+                gap: var(--spacing-lg);
+            }
+            
+            .page-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            
+            .main-content {
+                padding: var(--spacing-lg);
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-sidebar {
+                grid-template-columns: 1fr;
+            }
+            
+            .theme-controls {
+                bottom: var(--spacing-md);
+                right: var(--spacing-md);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: var(--spacing-md);
+            }
+            
+            .page-header {
+                padding: var(--spacing-lg) var(--spacing-md);
+            }
+            
+            .main-content {
+                padding: var(--spacing-md);
+            }
+            
+            .form-section,
+            .profile-card,
+            .activity-card {
+                padding: var(--spacing-lg);
+            }
+
+            .logo-text {
+                display: none;
+            }
+        }
+
+        /* Animations désactivées pour l'accessibilité */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        .animations-disabled * {
+            animation: none !important;
+            transition: none !important;
+        }
+    </style>
+</head>
+<body data-theme="light">
+    <!-- Animation de fond -->
+    <div class="background-animation" id="bgAnimation"></div>
+
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="assets/logo-removebg-preview.png" alt="GECC Logo" style="width: 32px; height: 32px;">
+                </div>
+                <div class="logo-text">GECC PROJECT</div>
+            </div>
+            <nav class="nav">
+                <a href="dashboard.html" class="nav-link">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projets</a>
+                <a href="profile.html" class="nav-link active">Mon Profil</a>
+                <a href="settings.html" class="nav-link">Paramètres</a>
+                <a href="admin.html" class="nav-link admin-link" id="adminLink" style="display: none;">👑 Administration</a>
+            </nav>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Jean Dupont</div>
+                        <div class="user-role" id="userRole">Administrateur</div>
+                    </div>
+                </div>
+                <a href="#" class="logout-btn" id="logoutBtn">
+                    <span>🚪</span>
+                    Déconnexion
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Bouton de debug temporaire -->
+    <div style="position: fixed; top: 10px; right: 10px; z-index: 9999;">
+        <button onclick="debugHeader()" style="background: #ff6b6b; color: white; border: none; padding: 5px 10px; border-radius: 3px; font-size: 12px;">
+            🔄 Debug Header
+        </button>
+    </div>
+    
+    <hr class="header-separator">
+
+    <!-- Page Title -->
+    <section class="page-title-section">
+        <div class="container">
+            <h1>Mon Profil & Paramètres</h1>
+            <p>Gérez vos informations personnelles et paramètres de compte</p>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="content">
+            <!-- Formulaire principal -->
+            <div class="profile-form">
+                <!-- Informations Personnelles -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">📝</div>
+                        <h2>Informations Personnelles</h2>
+                    </div>
+                    
+                    <form id="personalInfoForm" class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="fullName">
+                                Nom Complet
+                                <span class="label-badge">Requis</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="fullName" 
+                                class="form-input"
+                                placeholder="Jean Dupont"
+                                value="Jean Dupont"
+                                required
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="email">
+                                Email
+                                <span class="label-badge readonly">Lecture seule</span>
+                            </label>
+                            <input 
+                                type="email" 
+                                id="email" 
+                                class="form-input"
+                                value="jean.dupont@gecc.com"
+                                disabled
+                            >
+                            <div class="input-hint">L'email ne peut pas être modifié car il est utilisé comme identifiant</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="newPassword">Nouveau Mot de Passe</label>
+                            <input 
+                                type="password" 
+                                id="newPassword" 
+                                class="form-input"
+                                placeholder="Laissez vide si vous ne souhaitez pas changer"
+                            >
+                            <div class="input-hint">Laissez vide si vous ne souhaitez pas changer votre mot de passe</div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="currentPassword">Mot de Passe Actuel</label>
+                            <input 
+                                type="password" 
+                                id="currentPassword" 
+                                class="form-input"
+                                placeholder="Requis pour confirmer les modifications"
+                            >
+                            <div class="input-hint">Requis pour confirmer les modifications</div>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label" for="globalRole">
+                                Rôle Global
+                                <span class="label-badge readonly">Lecture seule</span>
+                            </label>
+                            <input 
+                                type="text" 
+                                id="globalRole" 
+                                class="form-input"
+                                value="Administrator"
+                                disabled
+                            >
+                            <div class="input-hint">Le rôle global ne peut pas être modifié</div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- Informations Professionnelles -->
+                <section class="form-section">
+                    <div class="section-header">
+                        <div class="section-icon">🏢</div>
+                        <h2>Informations Professionnelles</h2>
+                    </div>
+                    
+                    <form id="professionalInfoForm" class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label" for="companyName">Nom de l'Entreprise</label>
+                            <input 
+                                type="text" 
+                                id="companyName" 
+                                class="form-input"
+                                placeholder="Nom de votre entreprise"
+                                value="TechCorp Solutions"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label" for="jobTitle">Poste / Titre</label>
+                            <input 
+                                type="text" 
+                                id="jobTitle" 
+                                class="form-input"
+                                placeholder="Votre poste"
+                                value="Directeur Technique"
+                            >
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label" for="description">Description/Activité</label>
+                            <textarea 
+                                id="description" 
+                                class="form-input form-textarea"
+                                placeholder="Votre domaine d'activité"
+                            >Développement de solutions logicielles innovantes pour les entreprises du secteur technologique. Expertise en gestion de projets complexes et transformation digitale.</textarea>
+                        </div>
+
+                        <div class="form-group full-width">
+                            <label class="form-label" for="companyLogo">Logo de l'Entreprise</label>
+                            <div class="file-upload">
+                                <input type="file" id="companyLogo" class="file-input" accept="image/*">
+                                <button type="button" class="file-button" onclick="document.getElementById('companyLogo').click()">
+                                    <span>📎</span>
+                                    Choisir un fichier
+                                </button>
+                                <span class="file-name" id="logoFileName">Aucun fichier sélectionné</span>
+                            </div>
+                            <div class="input-hint">Format accepté : JPG, PNG, SVG (max 2MB)</div>
+                        </div>
+                    </form>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary">
+                            <span>↶</span>
+                            Annuler
+                        </button>
+                        <button type="button" class="btn btn-primary" id="saveProfile">
+                            <span>💾</span>
+                            Sauvegarder les modifications
+                        </button>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar Profile -->
+            <div class="profile-sidebar">
+                <div class="profile-card">
+                    <div class="profile-avatar">
+                        JD
+                        <div class="avatar-upload" title="Changer la photo de profil">
+                            <span>📷</span>
+                        </div>
+                    </div>
+                    <h3 class="profile-name">Jean Dupont</h3>
+                    <p class="profile-role">Administrator • TechCorp Solutions</p>
+                    
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">15</div>
+                            <div class="stat-label">Projets</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">247</div>
+                            <div class="stat-label">Tâches</div>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" style="width: 100%;">
+                        <span>👁️</span>
+                        Voir le profil public
+                    </button>
+                </div>
+
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-icon">⚡</div>
+                        <h3 class="activity-title">Activité Récente</h3>
+                    </div>
+                    
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div class="activity-text">
+                                Profil mis à jour
+                            </div>
+                            <div class="activity-time">Il y a 2h</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div class="activity-text">
+                                Nouveau projet créé
+                            </div>
+                            <div class="activity-time">Hier</div>
+                        </div>
+                        <div class="activity-item">
+                            <div class="activity-dot"></div>
+                            <div class="activity-text">
+                                Mot de passe modifié
+                            </div>
+                            <div class="activity-time">Il y a 3j</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Theme Controls -->
+    <div class="theme-controls">
+        <button class="control-btn" onclick="toggleTheme()" title="Changer le thème">
+            🌓
+        </button>
+        <button class="control-btn" onclick="toggleAnimations()" title="Activer/Désactiver les animations">
+            ✨
+        </button>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script>
+        // Variables globales
+        let currentTheme = 'light';
+        let animationsEnabled = true;
+        const body = document.body;
+
+        // Récupérer l'utilisateur actuel depuis la session
+        let currentUser = null;
+        
+        function loadCurrentUser() {
+            try {
+                // Vérifier d'abord la session active
+                const sessionData = localStorage.getItem('currentSession');
+                
+                if (sessionData) {
+                    try {
+                        const session = JSON.parse(sessionData);
+                        // Récupérer l'utilisateur complet depuis les données GECC
+                        const geccData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+                        const users = geccData.users || [];
+                        currentUser = users.find(user => user.id === session.id);
+                    } catch (error) {
+                        console.error('Erreur lors de la lecture de la session:', error);
+                    }
+                }
+                
+                // Fallback vers l'ancien système si nécessaire
+                if (!currentUser) {
+                    const savedUser = localStorage.getItem('geccp-currentUser');
+                    if (savedUser) {
+                        currentUser = JSON.parse(savedUser);
+                    }
+                }
+                
+                // Utilisateur par défaut si aucun n'est trouvé
+                if (!currentUser) {
+                    currentUser = {
+                        id: 1,
+                        fullName: 'Utilisateur',
+                        email: 'utilisateur@gecc.com',
+                        role: 'architect',
+                        companyName: 'GECC',
+                        jobTitle: 'Utilisateur',
+                        description: 'Utilisateur du système GECC',
+                        avatar: null,
+                        logo: null,
+                        stats: {
+                            projects: 0,
+                            tasks: 0
+                        }
+                    };
+                }
+                
+                console.log('✅ Utilisateur chargé:', currentUser.fullName);
+                
+                // Mettre à jour l'affichage du profil après le chargement
+                updateProfileDisplay();
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement de l\'utilisateur:', error);
+            }
+        }
+
+        // Génération des particules de fond
+        function createParticles() {
+            const bgAnimation = document.getElementById('bgAnimation');
+            const particleCount = 60;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 8 + 's';
+                particle.style.animationDuration = (Math.random() * 4 + 6) + 's';
+                bgAnimation.appendChild(particle);
+            }
+        }
+
+        // Basculer le thème
+        function toggleTheme() {
+            currentTheme = currentTheme === 'light' ? 'dark' : 'light';
+            body.setAttribute('data-theme', currentTheme);
+            
+            const themeText = currentTheme === 'dark' ? 'sombre' : 'clair';
+            showToast(`Thème ${themeText} activé ! 🎨`, 'success');
+            
+            localStorage.setItem('geccp-theme', currentTheme);
+        }
+
+        // Basculer les animations
+        function toggleAnimations() {
+            animationsEnabled = !animationsEnabled;
+            body.classList.toggle('animations-disabled', !animationsEnabled);
+            
+            const statusText = animationsEnabled ? 'activées' : 'désactivées';
+            showToast(`Animations ${statusText} ! ✨`, 'info');
+            
+            localStorage.setItem('geccp-animations', animationsEnabled);
+        }
+
+        // Système de toasts
+        function showToast(message, type = 'info') {
+            const toastContainer = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            
+            toastContainer.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.style.animation = 'slideInToast 0.3s ease-out reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Charger les données utilisateur
+        function loadUserData() {
+            // Simuler le chargement depuis localStorage ou API
+            const savedUser = localStorage.getItem('geccp-currentUser');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+            } else {
+                // Créer un utilisateur par défaut si aucun n'est trouvé
+                currentUser = {
+                    fullName: 'Utilisateur Test',
+                    email: 'test@gecc.com',
+                    role: 'ADMIN',
+                    companyName: 'GECC Project',
+                    jobTitle: 'Développeur',
+                    description: 'Utilisateur de test'
+                };
+            }
+            
+            // Remplir le formulaire
+            document.getElementById('fullName').value = currentUser.fullName || '';
+            document.getElementById('email').value = currentUser.email || '';
+            document.getElementById('globalRole').value = currentUser.role || '';
+            document.getElementById('companyName').value = currentUser.companyName || '';
+            document.getElementById('jobTitle').value = currentUser.jobTitle || '';
+            document.getElementById('description').value = currentUser.description || '';
+            
+            // Mettre à jour le profil sidebar et header
+            updateProfileDisplay();
+        }
+
+        // Mettre à jour l'affichage du profil
+        function updateProfileDisplay() {
+            if (!currentUser) {
+                console.log('Aucun utilisateur chargé pour la mise à jour du profil');
+                return;
+            }
+            
+            const initials = currentUser.fullName ? 
+                currentUser.fullName.split(' ').map(n => n[0]).join('').toUpperCase() : 'U';
+            
+            // Mettre à jour l'avatar dans l'en-tête
+            const userAvatar = document.getElementById('userAvatar');
+            if (userAvatar) {
+                userAvatar.textContent = initials;
+            }
+            
+            // Mettre à jour le nom dans l'en-tête
+            const userName = document.getElementById('userName');
+            if (userName) {
+                userName.textContent = currentUser.fullName || 'Utilisateur';
+            }
+            
+            // Mettre à jour le rôle dans l'en-tête
+            const userRole = document.getElementById('userRole');
+            if (userRole) {
+                const roleMap = {
+                    'architect': 'Architecte',
+                    'bct': 'Bureau de Contrôle Technique',
+                    'bet': 'Bureau d\'Études Techniques',
+                    'contractor': 'Entreprise',
+                    'admin': 'Administrateur'
+                };
+                userRole.textContent = roleMap[currentUser.role] || currentUser.role;
+            }
+            
+            // Mettre à jour le localStorage pour les autres pages
+            localStorage.setItem('geccp-currentUser', JSON.stringify(currentUser));
+            
+            // Déclencher la mise à jour globale du profil
+            window.dispatchEvent(new CustomEvent('profileUpdated', { 
+                detail: { user: currentUser } 
+            }));
+            
+            // Mettre à jour le module profile-display si disponible
+            if (window.profileDisplay) {
+                window.profileDisplay.updateAllDisplays();
+            }
+        }
+
+        // Validation du mot de passe
+        function validatePassword(password) {
+            if (!password) return { valid: true, message: '' };
+            if (password.length < 6) {
+                return { valid: false, message: 'Le mot de passe doit contenir au moins 6 caractères' };
+            }
+            return { valid: true, message: '' };
+        }
+
+        // Sauvegarder les modifications
+        function saveProfile() {
+            const fullName = document.getElementById('fullName').value;
+            const newPassword = document.getElementById('newPassword').value;
+            const currentPassword = document.getElementById('currentPassword').value;
+            const companyName = document.getElementById('companyName').value;
+            const jobTitle = document.getElementById('jobTitle').value;
+            const description = document.getElementById('description').value;
+            
+            // Validation du nom complet
+            if (!fullName.trim()) {
+                showToast('Le nom complet est requis ! ❌', 'error');
+                document.getElementById('fullName').classList.add('error');
+                return;
+            } else {
+                document.getElementById('fullName').classList.remove('error');
+            }
+            
+            // Validation du mot de passe
+            if (newPassword) {
+                const passwordValidation = validatePassword(newPassword);
+                if (!passwordValidation.valid) {
+                    showToast(passwordValidation.message + ' ❌', 'error');
+                    document.getElementById('newPassword').classList.add('error');
+                    return;
+                } else {
+                    document.getElementById('newPassword').classList.remove('error');
+                }
+                
+                if (!currentPassword) {
+                    showToast('Mot de passe actuel requis pour le changement ! ⚠️', 'warning');
+                    document.getElementById('currentPassword').classList.add('error');
+                    return;
+                } else {
+                    document.getElementById('currentPassword').classList.remove('error');
+                }
+            }
+            
+            // Simulation de sauvegarde
+            showToast('Sauvegarde en cours... ⏳', 'info');
+            
+            setTimeout(() => {
+                // Mettre à jour les données
+                currentUser.fullName = fullName;
+                currentUser.companyName = companyName;
+                currentUser.jobTitle = jobTitle;
+                currentUser.description = description;
+                
+                if (newPassword) {
+                    currentUser.password = newPassword; // En production, hasher le mot de passe
+                }
+                
+                // Sauvegarder dans localStorage
+                localStorage.setItem('geccp-currentUser', JSON.stringify(currentUser));
+                
+                // Mettre à jour l'affichage
+                updateProfileDisplay();
+                
+                // Réinitialiser les champs de mot de passe
+                document.getElementById('newPassword').value = '';
+                document.getElementById('currentPassword').value = '';
+                
+                showToast('Profil mis à jour avec succès ! ✅', 'success');
+            }, 2000);
+        }
+
+        // Annuler les modifications
+        function cancelChanges() {
+            // Recharger les données originales
+            loadUserData();
+            showToast('Modifications annulées ! ↶', 'info');
+            
+            // Supprimer les classes d'erreur
+            document.querySelectorAll('.form-input.error').forEach(input => {
+                input.classList.remove('error');
+            });
+        }
+
+        // Gestion du téléchargement de fichier
+        function handleFileUpload() {
+            const fileInput = document.getElementById('companyLogo');
+            const fileName = document.getElementById('logoFileName');
+            
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    if (file.size > 2 * 1024 * 1024) {
+                        showToast('Fichier trop volumineux (max 2MB) ! ⚠️', 'warning');
+                        return;
+                    }
+                    
+                    fileName.textContent = file.name;
+                    showToast('Logo sélectionné avec succès ! 📁', 'success');
+                } else {
+                    fileName.textContent = 'Aucun fichier sélectionné';
+                }
+            });
+        }
+
+        // Validation en temps réel
+        function setupRealTimeValidation() {
+            // Validation du nom complet
+            document.getElementById('fullName').addEventListener('input', function() {
+                if (this.value.trim()) {
+                    this.classList.remove('error');
+                }
+            });
+
+            // Validation du mot de passe
+            document.getElementById('newPassword').addEventListener('input', function() {
+                if (this.value) {
+                    const validation = validatePassword(this.value);
+                    if (validation.valid) {
+                        this.classList.remove('error');
+                    } else {
+                        this.classList.add('error');
+                    }
+                } else {
+                    this.classList.remove('error');
+                }
+            });
+
+            // Validation du mot de passe actuel
+            document.getElementById('currentPassword').addEventListener('input', function() {
+                if (this.value) {
+                    this.classList.remove('error');
+                }
+            });
+        }
+
+        // Navigation tabs
+        function handleNavigation() {
+            document.querySelectorAll('.nav-tab').forEach(tab => {
+                tab.addEventListener('click', function(e) {
+                    if (this.classList.contains('active')) return;
+                    
+                    e.preventDefault();
+                    const page = this.textContent.trim();
+                    showToast(`Navigation vers ${page}... 🧭`, 'info');
+                });
+            });
+        }
+
+        // Gestion des boutons d'action
+        function handleActions() {
+            // Bouton de sauvegarde
+            document.getElementById('saveProfile').addEventListener('click', saveProfile);
+            
+            // Bouton annuler
+            document.querySelector('.btn-secondary').addEventListener('click', cancelChanges);
+            
+            // Bouton d'accueil dans le header
+            const homeBtn = document.getElementById('logoutBtn');
+            if (homeBtn) {
+                // Le lien redirigera naturellement vers landing.html
+                // Pas besoin d'event listener supplémentaire
+            }
+            
+            // Charger les informations utilisateur dans l'en-tête
+            loadUserHeaderInfo();
+        }
+
+        // Charger les informations utilisateur dans l'en-tête
+        function loadUserHeaderInfo() {
+            try {
+                const savedUser = localStorage.getItem('geccp-currentUser');
+                if (!savedUser) {
+                    console.log('Aucun utilisateur connecté');
+                    return;
+                }
+                
+                const currentUser = JSON.parse(savedUser);
+                
+                // Mettre à jour l'avatar
+                const userAvatar = document.getElementById('userAvatar');
+                if (userAvatar) {
+                    if (currentUser.fullName) {
+                        const initials = currentUser.fullName.split(' ').map(n => n[0]).join('').toUpperCase();
+                        userAvatar.textContent = initials;
+                    } else {
+                        userAvatar.textContent = 'U';
+                    }
+                }
+                
+                // Mettre à jour le nom
+                const userName = document.getElementById('userName');
+                if (userName) {
+                    userName.textContent = currentUser.fullName || 'Utilisateur';
+                }
+                
+                // Mettre à jour le rôle
+                const userRole = document.getElementById('userRole');
+                if (userRole) {
+                    const roleMap = {
+                        'ADMIN': 'Administrateur',
+                        'SUPER_ADMIN': 'Super Administrateur',
+                        'ARCHITECT': 'Architecte',
+                        'ENGINEER': 'Ingénieur',
+                        'CONTRACTOR': 'Entrepreneur',
+                        'BET': 'Bureau d\'Études Techniques',
+                        'CLIENT': 'Client'
+                    };
+                    userRole.textContent = roleMap[currentUser.role] || currentUser.role;
+                }
+                
+                // Gérer l'affichage du lien d'administration
+                const adminLink = document.getElementById('adminLink');
+                if (adminLink) {
+                    console.log('Rôle utilisateur:', currentUser.role); // Debug
+                    if (currentUser.role === 'ADMIN' || currentUser.role === 'SUPER_ADMIN' || 
+                        currentUser.role === 'Administrator' || currentUser.role === 'admin') {
+                        adminLink.style.display = 'block';
+                        console.log('Lien d\'administration affiché'); // Debug
+                    } else {
+                        adminLink.style.display = 'none';
+                        console.log('Lien d\'administration masqué'); // Debug
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des informations utilisateur:', error);
+            }
+        }
+
+        // Gestion du lien d'administration
+        function handleAdminLink() {
+            const adminLink = document.getElementById('adminLink');
+            if (adminLink && currentUser) {
+                if (currentUser.role === 'ADMIN' || currentUser.role === 'SUPER_ADMIN') {
+                    adminLink.style.display = 'block';
+                } else {
+                    adminLink.style.display = 'none';
+                }
+            }
+        }
+
+        // Fonction de debug pour forcer la mise à jour du header
+        function debugHeader() {
+            console.log('🔍 Debug Header - État actuel:');
+            console.log('currentUser:', currentUser);
+            
+            const sessionData = localStorage.getItem('currentSession');
+            console.log('Session active:', sessionData);
+            
+            const geccData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+            console.log('Données GECC:', geccData);
+            
+            // Forcer le rechargement de l'utilisateur
+            loadCurrentUser();
+            
+            alert('✅ Debug terminé - Vérifiez la console pour les détails');
+        }
+
+        // Initialisation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Charger l'utilisateur actuel
+            loadCurrentUser();
+            
+            // Charger les préférences
+            const savedTheme = localStorage.getItem('geccp-theme');
+            const savedAnimations = localStorage.getItem('geccp-animations');
+            
+            if (savedTheme) {
+                currentTheme = savedTheme;
+                body.setAttribute('data-theme', currentTheme);
+            }
+            
+            if (savedAnimations !== null) {
+                animationsEnabled = savedAnimations === 'true';
+                body.classList.toggle('animations-disabled', !animationsEnabled);
+            }
+            
+            // Initialiser les fonctionnalités
+            createParticles();
+            loadUserData();
+            handleFileUpload();
+            handleNavigation();
+            handleActions();
+            setupRealTimeValidation();
+            handleAdminLink();
+            
+            // Message de bienvenue
+            setTimeout(() => {
+                showToast('Profil chargé avec succès ! 👤', 'success');
+            }, 1000);
+        });
+
+        // Raccourcis clavier
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'd':
+                        e.preventDefault();
+                        toggleTheme();
+                        break;
+                    case 's':
+                        e.preventDefault();
+                        saveProfile();
+                        break;
+                }
+            }
+        });
+
+        // Détection des préférences système
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+        if (prefersReducedMotion.matches && animationsEnabled) {
+            toggleAnimations();
+        }
+
+        prefersReducedMotion.addEventListener('change', function(e) {
+            if (e.matches && animationsEnabled) {
+                toggleAnimations();
+                showToast('Animations désactivées selon vos préférences système 🎯', 'info');
+            }
+        });
+    </script>
+    <script src="js/profile-display.js"></script>
+</body>
+</html>

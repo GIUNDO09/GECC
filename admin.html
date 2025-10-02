@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration GECC - Gestion des Utilisateurs</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <link rel="stylesheet" href="styles/design-system.css">
+    <style>
+        /* ========================================
+           STYLES ADMINISTRATION
+           ======================================== */
+        
+        .admin-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-primary);
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--card-gradient);
+            border-radius: 16px;
+            color: white;
+        }
+
+        .admin-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .admin-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--bg-primary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            color: var(--text-secondary);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .users-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-primary);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .users-table th,
+        .users-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .users-table th {
+            background: var(--bg-secondary);
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .users-table td {
+            color: var(--text-secondary);
+        }
+
+        .user-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-sm {
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+
+        .role-badge {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .role-admin {
+            background: #fee2e2;
+            color: #dc2626;
+        }
+
+        .role-architect {
+            background: #dbeafe;
+            color: #2563eb;
+        }
+
+        .role-client {
+            background: #f0fdf4;
+            color: #16a34a;
+        }
+
+        .status-active {
+            color: #16a34a;
+            font-weight: 600;
+        }
+
+        .status-inactive {
+            color: #dc2626;
+            font-weight: 600;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: var(--bg-primary);
+            padding: 2rem;
+            border-radius: 16px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .alert-success {
+            background: #f0fdf4;
+            color: #16a34a;
+            border: 1px solid #bbf7d0;
+        }
+
+        .alert-error {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <!-- Header -->
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title">👑 Administration GECC</h1>
+                <p>Gestion des utilisateurs, abonnements et données</p>
+            </div>
+            <div>
+                <button class="btn btn-outline" onclick="window.location.href='dashboard.html'">
+                    ← Retour au Dashboard
+                </button>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="admin-stats">
+            <div class="stat-card">
+                <div class="stat-number" id="totalUsers">0</div>
+                <div class="stat-label">Utilisateurs Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="activeUsers">0</div>
+                <div class="stat-label">Utilisateurs Actifs</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalProjects">0</div>
+                <div class="stat-label">Projets Total</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalDocuments">0</div>
+                <div class="stat-label">Documents Total</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="admin-tabs">
+            <button class="tab-button active" data-tab="users">👥 Utilisateurs</button>
+            <button class="tab-button" data-tab="subscriptions">💳 Abonnements</button>
+            <button class="tab-button" data-tab="data">💾 Gestion des Données</button>
+            <button class="tab-button" data-tab="system">⚙️ Système</button>
+        </div>
+
+        <!-- Contenu des tabs -->
+        <div id="usersTab" class="tab-content active">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                <h2>Gestion des Utilisateurs</h2>
+                <button class="btn btn-primary" onclick="openCreateUserModal()">
+                    ➕ Nouvel Utilisateur
+                </button>
+            </div>
+            
+            <input type="text" class="search-box" id="userSearch" placeholder="Rechercher un utilisateur...">
+            
+            <table class="users-table">
+                <thead>
+                    <tr>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Dernière Connexion</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersTableBody">
+                    <!-- Les utilisateurs seront chargés ici -->
+                </tbody>
+            </table>
+        </div>
+
+        <div id="subscriptionsTab" class="tab-content">
+            <h2>Gestion des Abonnements</h2>
+            <div class="alert alert-info">
+                <strong>ℹ️ Information :</strong>
+                <p>La gestion des abonnements sera disponible dans une version future. Pour l'instant, tous les utilisateurs ont un accès complet.</p>
+            </div>
+        </div>
+
+        <div id="dataTab" class="tab-content">
+            <h2>Gestion des Données</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem;">
+                <div class="stat-card">
+                    <h3>💾 Sauvegarde</h3>
+                    <p>Créer une sauvegarde complète du système</p>
+                    <button class="btn btn-primary" onclick="createSystemBackup()">
+                        Créer Sauvegarde
+                    </button>
+                </div>
+                <div class="stat-card">
+                    <h3>📊 Export</h3>
+                    <p>Exporter toutes les données</p>
+                    <button class="btn btn-secondary" onclick="exportAllData()">
+                        Exporter Données
+                    </button>
+                </div>
+                <div class="stat-card">
+                    <h3>🗑️ Nettoyage</h3>
+                    <p>Nettoyer les données obsolètes</p>
+                    <button class="btn btn-outline" onclick="cleanupData()">
+                        Nettoyer
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="systemTab" class="tab-content">
+            <h2>Configuration Système</h2>
+            <div class="alert alert-info">
+                <strong>ℹ️ Information :</strong>
+                <p>Les paramètres système avancés seront disponibles dans une version future.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Création Utilisateur -->
+    <div id="createUserModal" class="modal">
+        <div class="modal-content">
+            <h3>Créer un Nouvel Utilisateur</h3>
+            <form id="createUserForm">
+                <div class="form-group">
+                    <label for="userFirstName">Prénom</label>
+                    <input type="text" id="userFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="userLastName">Nom</label>
+                    <input type="text" id="userLastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="userEmail">Email</label>
+                    <input type="email" id="userEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="userPassword">Mot de passe</label>
+                    <input type="password" id="userPassword" required>
+                </div>
+                <div class="form-group">
+                    <label for="userRole">Rôle</label>
+                    <select id="userRole" required>
+                        <option value="client">Client</option>
+                        <option value="architect">Architecte</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeCreateUserModal()">
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Créer Utilisateur
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Modification Utilisateur -->
+    <div id="editUserModal" class="modal">
+        <div class="modal-content">
+            <h3>Modifier l'Utilisateur</h3>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId">
+                <div class="form-group">
+                    <label for="editUserFirstName">Prénom</label>
+                    <input type="text" id="editUserFirstName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUserLastName">Nom</label>
+                    <input type="text" id="editUserLastName" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUserEmail">Email</label>
+                    <input type="email" id="editUserEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="editUserRole">Rôle</label>
+                    <select id="editUserRole" required>
+                        <option value="client">Client</option>
+                        <option value="architect">Architecte</option>
+                        <option value="admin">Administrateur</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="editUserStatus">Statut</label>
+                    <select id="editUserStatus" required>
+                        <option value="active">Actif</option>
+                        <option value="inactive">Inactif</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeEditUserModal()">
+                        Annuler
+                    </button>
+                    <button type="submit" class="btn btn-primary">
+                        Sauvegarder
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+        import localRepository from './js/store.js';
+        import backupManager from './js/backup-manager.js';
+
+        class AdminManager {
+            constructor() {
+                this.currentUser = null;
+                this.init();
+            }
+
+            init() {
+                this.checkAdminAccess();
+                this.setupEventListeners();
+                this.loadStats();
+                this.loadUsers();
+            }
+
+            checkAdminAccess() {
+                this.currentUser = localRepository.getCurrentUser();
+                if (!this.currentUser || this.currentUser.role !== 'admin') {
+                    alert('Accès refusé. Seuls les administrateurs peuvent accéder à cette page.');
+                    window.location.href = 'login.html';
+                    return;
+                }
+            }
+
+            setupEventListeners() {
+                // Tabs
+                document.querySelectorAll('.tab-button').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        this.switchTab(e.target.dataset.tab);
+                    });
+                });
+
+                // Recherche utilisateurs
+                document.getElementById('userSearch').addEventListener('input', (e) => {
+                    this.filterUsers(e.target.value);
+                });
+
+                // Formulaires
+                document.getElementById('createUserForm').addEventListener('submit', (e) => {
+                    this.createUser(e);
+                });
+
+                document.getElementById('editUserForm').addEventListener('submit', (e) => {
+                    this.updateUser(e);
+                });
+            }
+
+            switchTab(tabName) {
+                // Mettre à jour les boutons
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
+
+                // Mettre à jour le contenu
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`${tabName}Tab`).classList.add('active');
+            }
+
+            loadStats() {
+                const stats = localRepository.getStats();
+                document.getElementById('totalUsers').textContent = stats.users;
+                document.getElementById('activeUsers').textContent = localRepository.getAllUsers().filter(u => u.isActive).length;
+                document.getElementById('totalProjects').textContent = stats.projects;
+                document.getElementById('totalDocuments').textContent = stats.documents;
+            }
+
+            loadUsers() {
+                const users = localRepository.getAllUsers();
+                const tbody = document.getElementById('usersTableBody');
+                tbody.innerHTML = '';
+
+                users.forEach(user => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${user.fullName}</td>
+                        <td>${user.email}</td>
+                        <td><span class="role-badge role-${user.role}">${this.getRoleLabel(user.role)}</span></td>
+                        <td><span class="status-${user.isActive ? 'active' : 'inactive'}">${user.isActive ? 'Actif' : 'Inactif'}</span></td>
+                        <td>${user.lastLoginAt ? new Date(user.lastLoginAt).toLocaleDateString() : 'Jamais'}</td>
+                        <td>
+                            <div class="user-actions">
+                                <button class="btn btn-sm btn-secondary" onclick="editUser('${user.id}')">
+                                    ✏️ Modifier
+                                </button>
+                                <button class="btn btn-sm btn-outline" onclick="resetPassword('${user.id}')">
+                                    🔑 Reset MDP
+                                </button>
+                                <button class="btn btn-sm btn-outline" onclick="toggleUserStatus('${user.id}')">
+                                    ${user.isActive ? '⏸️ Désactiver' : '▶️ Activer'}
+                                </button>
+                                ${user.id !== this.currentUser.id ? `<button class="btn btn-sm btn-outline" onclick="deleteUser('${user.id}')">🗑️ Supprimer</button>` : ''}
+                            </div>
+                        </td>
+                    `;
+                    tbody.appendChild(row);
+                });
+            }
+
+            getRoleLabel(role) {
+                const labels = {
+                    'admin': 'Administrateur',
+                    'architect': 'Architecte',
+                    'client': 'Client'
+                };
+                return labels[role] || role;
+            }
+
+            filterUsers(searchTerm) {
+                const rows = document.querySelectorAll('#usersTableBody tr');
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchTerm.toLowerCase()) ? '' : 'none';
+                });
+            }
+
+            createUser(e) {
+                e.preventDefault();
+                const formData = new FormData(e.target);
+                const userData = {
+                    email: document.getElementById('userEmail').value,
+                    password: document.getElementById('userPassword').value,
+                    fullName: `${document.getElementById('userFirstName').value} ${document.getElementById('userLastName').value}`,
+                    role: document.getElementById('userRole').value
+                };
+
+                try {
+                    const user = localRepository.createUser(userData);
+                    this.showAlert('Utilisateur créé avec succès', 'success');
+                    this.closeCreateUserModal();
+                    this.loadUsers();
+                    this.loadStats();
+                } catch (error) {
+                    this.showAlert('Erreur: ' + error.message, 'error');
+                }
+            }
+
+            updateUser(e) {
+                e.preventDefault();
+                const userId = document.getElementById('editUserId').value;
+                const updateData = {
+                    fullName: `${document.getElementById('editUserFirstName').value} ${document.getElementById('editUserLastName').value}`,
+                    email: document.getElementById('editUserEmail').value,
+                    role: document.getElementById('editUserRole').value,
+                    isActive: document.getElementById('editUserStatus').value === 'active'
+                };
+
+                try {
+                    localRepository.updateUser(userId, updateData);
+                    this.showAlert('Utilisateur mis à jour avec succès', 'success');
+                    this.closeEditUserModal();
+                    this.loadUsers();
+                } catch (error) {
+                    this.showAlert('Erreur: ' + error.message, 'error');
+                }
+            }
+
+            showAlert(message, type) {
+                const alert = document.createElement('div');
+                alert.className = `alert alert-${type}`;
+                alert.textContent = message;
+                document.querySelector('.admin-container').insertBefore(alert, document.querySelector('.admin-stats'));
+                
+                setTimeout(() => {
+                    alert.remove();
+                }, 5000);
+            }
+        }
+
+        // Fonctions globales pour les boutons
+        window.openCreateUserModal = function() {
+            document.getElementById('createUserModal').classList.add('active');
+        };
+
+        window.closeCreateUserModal = function() {
+            document.getElementById('createUserModal').classList.remove('active');
+            document.getElementById('createUserForm').reset();
+        };
+
+        window.editUser = function(userId) {
+            const user = localRepository.getUser(userId);
+            if (!user) return;
+
+            document.getElementById('editUserId').value = user.id;
+            const [firstName, ...lastNameParts] = user.fullName.split(' ');
+            document.getElementById('editUserFirstName').value = firstName;
+            document.getElementById('editUserLastName').value = lastNameParts.join(' ');
+            document.getElementById('editUserEmail').value = user.email;
+            document.getElementById('editUserRole').value = user.role;
+            document.getElementById('editUserStatus').value = user.isActive ? 'active' : 'inactive';
+
+            document.getElementById('editUserModal').classList.add('active');
+        };
+
+        window.closeEditUserModal = function() {
+            document.getElementById('editUserModal').classList.remove('active');
+        };
+
+        window.resetPassword = function(userId) {
+            const newPassword = prompt('Nouveau mot de passe:');
+            if (!newPassword) return;
+
+            try {
+                localRepository.updateUser(userId, { password: newPassword });
+                adminManager.showAlert('Mot de passe réinitialisé', 'success');
+            } catch (error) {
+                adminManager.showAlert('Erreur: ' + error.message, 'error');
+            }
+        };
+
+        window.toggleUserStatus = function(userId) {
+            const user = localRepository.getUser(userId);
+            if (!user) return;
+
+            try {
+                localRepository.updateUser(userId, { isActive: !user.isActive });
+                adminManager.loadUsers();
+                adminManager.loadStats();
+                adminManager.showAlert(`Utilisateur ${user.isActive ? 'désactivé' : 'activé'}`, 'success');
+            } catch (error) {
+                adminManager.showAlert('Erreur: ' + error.message, 'error');
+            }
+        };
+
+        window.deleteUser = function(userId) {
+            if (!confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?')) return;
+
+            try {
+                localRepository.deleteUser(userId);
+                adminManager.loadUsers();
+                adminManager.loadStats();
+                adminManager.showAlert('Utilisateur supprimé', 'success');
+            } catch (error) {
+                adminManager.showAlert('Erreur: ' + error.message, 'error');
+            }
+        };
+
+        window.createSystemBackup = function() {
+            if (window.GECC && window.GECC.backup) {
+                window.GECC.backup.create();
+                adminManager.showAlert('Sauvegarde créée avec succès', 'success');
+            } else {
+                adminManager.showAlert('Système de sauvegarde non disponible', 'error');
+            }
+        };
+
+        window.exportAllData = function() {
+            if (window.GECC && window.GECC.backup) {
+                window.GECC.backup.download();
+                adminManager.showAlert('Données exportées', 'success');
+            } else {
+                adminManager.showAlert('Système d\'export non disponible', 'error');
+            }
+        };
+
+        window.cleanupData = function() {
+            if (!confirm('Êtes-vous sûr de vouloir nettoyer les données obsolètes ?')) return;
+            
+            // Nettoyer les données expirées
+            localRepository.cleanupExpiredPasswordResets();
+            localRepository.cleanupExpiredInvites();
+            
+            adminManager.showAlert('Nettoyage terminé', 'success');
+        };
+
+        // Initialiser l'admin manager
+        let adminManager;
+        document.addEventListener('DOMContentLoaded', () => {
+            adminManager = new AdminManager();
+        });
+    </script>
+</body>
+</html>

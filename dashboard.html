@@ -1,0 +1,1535 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - GECC</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <meta name="description" content="Tableau de bord GECC - Vue d'ensemble des projets et notifications">
+    <meta name="theme-color" content="#667eea">
+    <link rel="stylesheet" href="styles/design-system.css">
+    <link rel="stylesheet" href="styles/header-design.css">
+    
+    <style>
+        /* Style pour le logo PNG */
+        .header .logo-icon {
+            background: transparent !important; /* Enlever le fond violet */
+            box-shadow: none !important; /* Enlever l'ombre */
+        }
+        
+        .header .logo-icon img {
+            width: 32px !important;
+            height: 32px !important;
+            object-fit: contain !important;
+            /* Pas de filtre nécessaire car le PNG a un fond transparent */
+        }
+    </style>
+    <style>
+        /* ========================================
+           DESIGN SYSTEM PREMIUM - GLASSMORPHISM
+           ======================================== */
+        
+        :root {
+            /* Variables principales */
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --spacing-lg: 24px;
+            --spacing-md: 16px;
+            --spacing-sm: 12px;
+            --spacing-xs: 8px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Thème sombre */
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --border-hover: #475569;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Reset et base */
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Container principal */
+        .container {
+            width: 100%;
+            max-width: none;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
+        }
+
+        /* Header premium */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .header {
+            background: rgba(15, 23, 42, 0.8);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-md) var(--spacing-md);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .logo-img {
+            width: 32px;
+            height: 32px;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin: 0;
+        }
+
+        .nav {
+            display: flex;
+            gap: var(--spacing-md);
+        }
+
+        .nav-link {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            color: var(--text-primary);
+            background: var(--bg-tertiary);
+        }
+
+        /* Main content */
+        .main {
+            padding: var(--spacing-lg) 0;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* Dashboard header premium */
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .dashboard-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 0 0 var(--spacing-sm) 0;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .dashboard-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            margin: 0 0 var(--spacing-lg) 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Boutons premium */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: none;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--card-gradient);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-sm {
+            padding: var(--spacing-xs) var(--spacing-sm);
+            font-size: 0.75rem;
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        /* User switcher premium */
+        .user-switcher {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-switcher h3 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+        }
+
+        .user-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--spacing-md);
+        }
+
+        .user-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            padding: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .user-item:hover {
+            background: var(--bg-tertiary);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .user-avatar {
+            font-size: 2rem;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-primary);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+        }
+
+        .user-info {
+            flex: 1;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 2px;
+        }
+
+        .user-role {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard grid premium */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--spacing-lg);
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .dashboard-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .dashboard-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--card-gradient);
+        }
+
+        .dashboard-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dashboard-card h3 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .card-content {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .card-content p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Dashboard sections premium */
+        .dashboard-sections {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .dashboard-section {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .dashboard-section:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .dashboard-section h3 {
+            margin: 0 0 var(--spacing-md) 0;
+            color: var(--text-primary);
+            font-size: 1.25rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        /* Notifications premium */
+        .notifications-container {
+            position: relative;
+        }
+
+        .notifications-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .notifications-count {
+            background: var(--card-gradient);
+            color: white;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 24px;
+            text-align: center;
+        }
+
+        .notifications-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .notification-item {
+            padding: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .notification-item:hover {
+            background: var(--bg-tertiary);
+        }
+
+        .notification-item.unread {
+            border-left: 4px solid #4f46e5;
+            background: rgba(79, 70, 229, 0.05);
+        }
+
+        /* Empty state premium */
+        .notifications-empty,
+        .empty-state {
+            text-align: center;
+            padding: var(--spacing-lg) * 2;
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            opacity: 0.5;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .empty-state h4 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .empty-state p {
+            color: var(--text-secondary);
+            margin: 0;
+        }
+
+        /* Projects list premium */
+        .projects-list,
+        .activity-list {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .project-item,
+        .activity-item {
+            padding: var(--spacing-sm);
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .project-item:hover,
+        .activity-item:hover {
+            background: var(--bg-tertiary);
+            transform: translateX(4px);
+        }
+
+        /* Footer premium */
+        .footer {
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
+            padding: var(--spacing-md) 0;
+            margin-top: var(--spacing-lg);
+        }
+
+        .footer p {
+            text-align: center;
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 0.875rem;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 var(--spacing-sm);
+            }
+
+            .dashboard-header {
+                padding: var(--spacing-md);
+            }
+
+            .dashboard-header h2 {
+                font-size: 2rem;
+            }
+
+            .demo-controls {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-md);
+            }
+
+            .user-list {
+                grid-template-columns: 1fr;
+            }
+
+            .nav {
+                flex-direction: column;
+                gap: var(--spacing-xs);
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .dashboard-header,
+        .dashboard-grid,
+        .dashboard-sections,
+        .user-switcher {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .dashboard-card {
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .dashboard-card:nth-child(1) { animation-delay: 0.1s; }
+        .dashboard-card:nth-child(2) { animation-delay: 0.2s; }
+        .dashboard-card:nth-child(3) { animation-delay: 0.3s; }
+        .dashboard-card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Respect des préférences d'accessibilité */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+    ========================================
+    DASHBOARD - TABLEAU DE BORD
+    ========================================
+    Rôle : Vue d'ensemble de l'application
+    - Affichage des projets en cours
+    - Notifications et alertes
+    - Statistiques et métriques
+    - Accès rapide aux fonctionnalités principales
+    - Navigation vers les autres sections
+    ========================================
+    -->
+    
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <div class="logo-icon">
+                    <img src="assets/logo-removebg-preview.png" alt="GECC Logo" style="width: 32px; height: 32px;">
+                </div>
+                <div class="logo-text">GECC PROJECT</div>
+            </div>
+            <nav class="nav">
+                <a href="dashboard.html" class="nav-link active">Dashboard</a>
+                <a href="projects.html" class="nav-link">Projets</a>
+                <a href="profile.html" class="nav-link">Mon Profil</a>
+                <a href="settings.html" class="nav-link">Paramètres</a>
+                <a href="admin.html" class="nav-link admin-link" id="adminLink" style="display: none;">👑 Administration</a>
+            </nav>
+            <div class="user-section">
+                <div class="user-info">
+                    <div class="user-avatar" id="userAvatar">JD</div>
+                    <div class="user-details">
+                        <div class="user-name" id="userName">Jean Dupont</div>
+                        <div class="user-role" id="userRole">Administrateur</div>
+                    </div>
+                </div>
+                <a href="#" class="logout-btn" id="logoutBtn">
+                    <span>🚪</span>
+                    Déconnexion
+                </a>
+            </div>
+        </div>
+    </header>
+    <hr class="header-separator">
+
+    <main class="main">
+        <div class="container">
+            <div class="dashboard-header">
+                <h2>Tableau de bord</h2>
+                <p>Bienvenue sur votre espace de gestion de projets BTP</p>
+                <div class="demo-controls">
+                    <button id="loadDemoBtn" class="btn btn-primary">
+                        🌱 Charger les données de démo
+                    </button>
+                    <button id="clearDataBtn" class="btn btn-secondary" style="display: none;">
+                        🗑️ Vider les données
+                    </button>
+                    <button id="forceLogoutBtn" class="btn btn-warning">
+                        🔄 Forcer la déconnexion
+                    </button>
+                    <button id="refreshHeaderBtn" class="btn btn-info">
+                        🔄 Actualiser le header
+                    </button>
+                </div>
+            </div>
+
+            <!-- Section de basculement d'utilisateur (visible uniquement en mode démo) -->
+            <div id="userSwitcher" class="user-switcher" style="display: none;">
+                <h3>🔄 Basculement d'utilisateur (Mode Démo)</h3>
+                <div class="user-list">
+                    <div class="user-item" data-user-id="demo-architect-1">
+                        <div class="user-avatar">👩‍💼</div>
+                        <div class="user-info">
+                            <div class="user-name">Marie Dubois</div>
+                            <div class="user-role">Architecte</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary switch-user-btn">Se connecter</button>
+                    </div>
+                    <div class="user-item" data-user-id="demo-bct-1">
+                        <div class="user-avatar">👨‍🔧</div>
+                        <div class="user-info">
+                            <div class="user-name">Pierre Martin</div>
+                            <div class="user-role">BCT</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary switch-user-btn">Se connecter</button>
+                    </div>
+                    <div class="user-item" data-user-id="demo-bet-1">
+                        <div class="user-avatar">👩‍🔬</div>
+                        <div class="user-info">
+                            <div class="user-name">Sophie Leroy</div>
+                            <div class="user-role">BET</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary switch-user-btn">Se connecter</button>
+                    </div>
+                    <div class="user-item" data-user-id="demo-contractor-1">
+                        <div class="user-avatar">👷‍♂️</div>
+                        <div class="user-info">
+                            <div class="user-name">Jean Bernard</div>
+                            <div class="user-role">Entrepreneur</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary switch-user-btn">Se connecter</button>
+                    </div>
+                    <div class="user-item" data-user-id="demo-admin-1">
+                        <div class="user-avatar">👨‍💻</div>
+                        <div class="user-info">
+                            <div class="user-name">Admin GECC</div>
+                            <div class="user-role">Administrateur</div>
+                        </div>
+                        <button class="btn btn-sm btn-primary switch-user-btn">Se connecter</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-grid">
+                <div class="dashboard-card">
+                    <h3>Projets en cours</h3>
+                    <div class="card-content">
+                        <div class="stat-number" id="activeProjects">0</div>
+                        <p>Projets actifs</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Documents en attente</h3>
+                    <div class="card-content">
+                        <div class="stat-number" id="pendingDocuments">0</div>
+                        <p>Documents à traiter</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Notifications</h3>
+                    <div class="card-content">
+                        <div class="stat-number" id="notificationsCount">0</div>
+                        <p>Nouvelles notifications</p>
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <h3>Équipe</h3>
+                    <div class="card-content">
+                        <div class="stat-number" id="teamMembers">0</div>
+                        <p>Membres actifs</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dashboard-sections">
+                <section class="dashboard-section">
+                    <h3>Mes notifications</h3>
+                    <div class="notifications-container" id="notificationsContainer">
+                        <div class="notifications-header">
+                            <span class="notifications-count" id="notificationsCountBadge">0</span>
+                            <button class="btn btn-sm btn-outline" id="markAllReadBtn" style="display: none;">
+                                Marquer tout comme lu
+                            </button>
+                        </div>
+                        <div class="notifications-list" id="notificationsList">
+                            <!-- Notifications de l'utilisateur -->
+                        </div>
+                        <div class="notifications-empty" id="notificationsEmpty" style="display: none;">
+                            <div class="empty-state">
+                                <div class="empty-icon">🔔</div>
+                                <h4>Aucune notification</h4>
+                                <p>Vous n'avez pas encore de notifications.</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="dashboard-section">
+                    <h3>Projets récents</h3>
+                    <div class="projects-list" id="recentProjects">
+                        <!-- Projets récents -->
+                    </div>
+                </section>
+
+                <section class="dashboard-section">
+                    <h3>Activité récente</h3>
+                    <div class="activity-list" id="recentActivity">
+                        <!-- Activité récente -->
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 GECC - Gestion & Suivi de Projet BTP</p>
+        </div>
+    </footer>
+
+    <script src="js/api-client.js"></script>
+    <script src="js/auth-api.js"></script>
+    <script src="js/store.js"></script>
+    <script src="js/models.js"></script>
+    <script src="js/app.js"></script>
+    
+    <script>
+        // ========================================
+        // AMÉLIORATIONS UX PREMIUM
+        // ========================================
+        
+        // ========================================
+        // AMÉLIORATIONS UX PREMIUM
+        // ========================================
+        
+        class PremiumUX {
+            constructor() {
+                this.init();
+            }
+            
+            init() {
+                this.setupSmoothScrolling();
+                this.setupLoadingStates();
+                this.setupHoverEffects();
+                this.setupCardAnimations();
+            }
+            
+            setupSmoothScrolling() {
+                // Smooth scroll pour les liens d'ancrage
+                document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                    anchor.addEventListener('click', function (e) {
+                        e.preventDefault();
+                        const target = document.querySelector(this.getAttribute('href'));
+                        if (target) {
+                            target.scrollIntoView({
+                                behavior: 'smooth',
+                                block: 'start'
+                            });
+                        }
+                    });
+                });
+            }
+            
+            setupLoadingStates() {
+                // Ajouter des états de chargement aux boutons
+                document.querySelectorAll('.btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        if (this.type === 'submit' || this.classList.contains('btn-primary')) {
+                            this.style.opacity = '0.7';
+                            this.style.pointerEvents = 'none';
+                            
+                            setTimeout(() => {
+                                this.style.opacity = '1';
+                                this.style.pointerEvents = 'auto';
+                            }, 1000);
+                        }
+                    });
+                });
+            }
+            
+            setupHoverEffects() {
+                // Effets de hover avancés pour les cartes
+                document.querySelectorAll('.dashboard-card, .dashboard-section, .user-item').forEach(card => {
+                    card.addEventListener('mouseenter', function() {
+                        this.style.transform = 'translateY(-4px)';
+                        this.style.boxShadow = 'var(--shadow-lg)';
+                    });
+                    
+                    card.addEventListener('mouseleave', function() {
+                        this.style.transform = 'translateY(0)';
+                        this.style.boxShadow = 'var(--shadow-md)';
+                    });
+                });
+            }
+            
+            setupCardAnimations() {
+                // Animation d'entrée pour les cartes
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    });
+                });
+                
+                // Observer les éléments pour l'animation
+                document.querySelectorAll('.dashboard-card, .dashboard-section, .user-item').forEach(el => {
+                    el.style.opacity = '0';
+                    el.style.transform = 'translateY(20px)';
+                    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                    observer.observe(el);
+                });
+            }
+        }
+        
+        // ========================================
+        // FONCTIONS UTILITAIRES
+        // ========================================
+        
+        function checkAdminAccess() {
+            // Vérifier si l'utilisateur est admin
+            const currentUser = JSON.parse(localStorage.getItem('gecc_session') || '{}');
+            if (currentUser.userId) {
+                const userData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+                const user = userData.users?.find(u => u.id === currentUser.userId);
+                if (user && user.role === 'admin') {
+                    document.getElementById('adminLink').style.display = 'block';
+                }
+            }
+        }
+
+        // ========================================
+        // INITIALISATION
+        // ========================================
+        
+        // Créer des notifications de démonstration
+        function createDemoNotifications() {
+            const savedUser = localStorage.getItem('geccp-currentUser');
+            if (!savedUser) return;
+            
+            const currentUser = JSON.parse(savedUser);
+            const savedNotifications = localStorage.getItem('geccp-notifications');
+            let allNotifications = [];
+            
+            if (savedNotifications) {
+                allNotifications = JSON.parse(savedNotifications);
+            }
+            
+            // Vérifier si des notifications existent déjà
+            const userNotifications = allNotifications.filter(n => n.userId === currentUser.id);
+            if (userNotifications.length > 0) return;
+            
+            // Créer des notifications de démonstration
+            const demoNotifications = [
+                {
+                    id: 'demo-notif-1',
+                    userId: currentUser.id,
+                    type: 'invitation_action',
+                    title: 'Invitation acceptée',
+                    message: 'Marie Dubois a accepté votre invitation au projet "Résidence Les Jardins"',
+                    projectId: 'demo-project-1',
+                    isRead: false,
+                    createdAt: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString() // Il y a 2h
+                },
+                {
+                    id: 'demo-notif-2',
+                    userId: currentUser.id,
+                    type: 'document_submitted',
+                    title: 'Nouveau document soumis',
+                    message: 'Plan architectural soumis pour révision dans le projet "Résidence Les Jardins"',
+                    projectId: 'demo-project-1',
+                    isRead: false,
+                    createdAt: new Date(Date.now() - 4 * 60 * 60 * 1000).toISOString() // Il y a 4h
+                },
+                {
+                    id: 'demo-notif-3',
+                    userId: currentUser.id,
+                    type: 'task_assigned',
+                    title: 'Nouvelle tâche assignée',
+                    message: 'Vous avez été assigné à la tâche "Révision des plans électriques"',
+                    projectId: 'demo-project-1',
+                    isRead: true,
+                    createdAt: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // Il y a 1 jour
+                    readAt: new Date(Date.now() - 20 * 60 * 60 * 1000).toISOString()
+                }
+            ];
+            
+            // Ajouter les notifications de démonstration
+            allNotifications.push(...demoNotifications);
+            
+            // Sauvegarder
+            localStorage.setItem('geccp-notifications', JSON.stringify(allNotifications));
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialiser les améliorations UX
+            new PremiumUX();
+            
+            // Afficher le lien d'administration pour les admins
+            checkAdminAccess();
+            
+            // Créer des notifications de démonstration
+            createDemoNotifications();
+            
+            // Initialiser l'affichage des profils
+            if (window.profileDisplay) {
+                window.profileDisplay.updateAllDisplays();
+            }
+            
+            // Animation d'entrée pour les éléments principaux
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            });
+            
+            // Observer les éléments pour l'animation
+            document.querySelectorAll('.dashboard-header, .dashboard-grid, .dashboard-sections, .user-switcher').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+                observer.observe(el);
+            });
+        });
+        
+        // ========================================
+        // GESTION DES ERREURS
+        // ========================================
+        
+        window.addEventListener('error', function(e) {
+            console.error('Erreur JavaScript:', e.error);
+        });
+        
+        // ========================================
+        // GESTION DES NOTIFICATIONS
+        // ========================================
+        
+        // Charger les notifications au démarrage
+        document.addEventListener('DOMContentLoaded', function() {
+            loadNotifications();
+            updateNotificationsCount();
+            
+            // Ajouter l'événement pour le bouton "Marquer tout comme lu"
+            const markAllReadBtn = document.getElementById('markAllReadBtn');
+            if (markAllReadBtn) {
+                markAllReadBtn.addEventListener('click', markAllNotificationsAsRead);
+            }
+        });
+        
+        // Charger les notifications de l'utilisateur
+        function loadNotifications() {
+            try {
+                // Récupérer l'utilisateur depuis localStorage
+                const savedUser = localStorage.getItem('geccp-currentUser');
+                if (!savedUser) {
+                    console.log('Aucun utilisateur connecté');
+                    return;
+                }
+                
+                const currentUser = JSON.parse(savedUser);
+                
+                // Récupérer les notifications depuis localStorage
+                const savedNotifications = localStorage.getItem('geccp-notifications');
+                let allNotifications = [];
+                
+                if (savedNotifications) {
+                    allNotifications = JSON.parse(savedNotifications);
+                }
+                
+                // Filtrer les notifications de l'utilisateur
+                const userNotifications = allNotifications.filter(notification => 
+                    notification.userId === currentUser.id
+                );
+                
+                // Trier par date (plus récentes en premier)
+                userNotifications.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+                
+                // Afficher les notifications
+                displayNotifications(userNotifications);
+                
+                // Mettre à jour le compteur
+                updateNotificationsCount();
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des notifications:', error);
+            }
+        }
+        
+        // Afficher les notifications
+        function displayNotifications(notifications) {
+            const notificationsList = document.getElementById('notificationsList');
+            const notificationsEmpty = document.getElementById('notificationsEmpty');
+            const markAllReadBtn = document.getElementById('markAllReadBtn');
+            
+            if (!notificationsList || !notificationsEmpty) {
+                console.error('Éléments de notifications non trouvés');
+                return;
+            }
+            
+            if (notifications.length === 0) {
+                notificationsList.style.display = 'none';
+                notificationsEmpty.style.display = 'block';
+                if (markAllReadBtn) markAllReadBtn.style.display = 'none';
+                return;
+            }
+            
+            notificationsList.style.display = 'block';
+            notificationsEmpty.style.display = 'none';
+            
+            // Afficher le bouton "Marquer tout comme lu" s'il y a des notifications non lues
+            const unreadCount = notifications.filter(n => !n.isRead).length;
+            if (markAllReadBtn) {
+                markAllReadBtn.style.display = unreadCount > 0 ? 'block' : 'none';
+            }
+            
+            // Générer le HTML des notifications
+            notificationsList.innerHTML = notifications.map(notification => createNotificationElement(notification)).join('');
+        }
+        
+        // Créer un élément de notification
+        function createNotificationElement(notification) {
+            const isUnread = !notification.isRead;
+            const date = new Date(notification.createdAt).toLocaleDateString('fr-FR', {
+                day: '2-digit',
+                month: '2-digit',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+            
+            const icon = getNotificationIcon(notification.type);
+            const actionUrl = notification.actionUrl ? `onclick="window.location.href='${notification.actionUrl}'"` : '';
+            
+            return `
+                <div class="notification-item ${isUnread ? 'unread' : ''}" ${actionUrl} style="cursor: ${actionUrl ? 'pointer' : 'default'}">
+                    <div class="notification-content">
+                        <div class="notification-header">
+                            <span class="notification-icon">${icon}</span>
+                            <span class="notification-title">${notification.title}</span>
+                            <span class="notification-date">${date}</span>
+                        </div>
+                        <div class="notification-message">${notification.message}</div>
+                        ${isUnread ? '<div class="notification-actions"><button class="btn btn-sm btn-outline" onclick="markNotificationAsRead(\'' + notification.id + '\')">Marquer comme lu</button></div>' : ''}
+                    </div>
+                </div>
+            `;
+        }
+        
+        // Obtenir l'icône selon le type de notification
+        function getNotificationIcon(type) {
+            const icons = {
+                'invitation_action': '📧',
+                'project_update': '📁',
+                'document_submitted': '📄',
+                'document_approved': '✅',
+                'document_rejected': '❌',
+                'task_assigned': '📋',
+                'task_completed': '✅',
+                'comment_added': '💬',
+                'invitation_sent': '📤',
+                'invitation_accepted': '✅',
+                'invitation_rejected': '❌'
+            };
+            return icons[type] || '🔔';
+        }
+        
+        // Mettre à jour le compteur de notifications
+        function updateNotificationsCount() {
+            try {
+                // Récupérer l'utilisateur depuis localStorage
+                const savedUser = localStorage.getItem('geccp-currentUser');
+                if (!savedUser) {
+                    return;
+                }
+                
+                const currentUser = JSON.parse(savedUser);
+                
+                // Récupérer les notifications depuis localStorage
+                const savedNotifications = localStorage.getItem('geccp-notifications');
+                let allNotifications = [];
+                
+                if (savedNotifications) {
+                    allNotifications = JSON.parse(savedNotifications);
+                }
+                
+                // Filtrer les notifications de l'utilisateur
+                const userNotifications = allNotifications.filter(notification => 
+                    notification.userId === currentUser.id
+                );
+                
+                const unreadCount = userNotifications.filter(n => !n.isRead).length;
+                
+                // Mettre à jour les compteurs
+                const notificationsCount = document.getElementById('notificationsCount');
+                const notificationsCountBadge = document.getElementById('notificationsCountBadge');
+                
+                if (notificationsCount) {
+                    notificationsCount.textContent = unreadCount;
+                }
+                
+                if (notificationsCountBadge) {
+                    notificationsCountBadge.textContent = unreadCount;
+                    notificationsCountBadge.style.display = unreadCount > 0 ? 'block' : 'none';
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors de la mise à jour du compteur de notifications:', error);
+            }
+        }
+        
+        // Marquer une notification comme lue
+        function markNotificationAsRead(notificationId) {
+            try {
+                // Récupérer les notifications depuis localStorage
+                const savedNotifications = localStorage.getItem('geccp-notifications');
+                let allNotifications = [];
+                
+                if (savedNotifications) {
+                    allNotifications = JSON.parse(savedNotifications);
+                }
+                
+                // Trouver et marquer la notification comme lue
+                const notificationIndex = allNotifications.findIndex(n => n.id === notificationId);
+                if (notificationIndex !== -1) {
+                    allNotifications[notificationIndex].isRead = true;
+                    allNotifications[notificationIndex].readAt = new Date().toISOString();
+                    
+                    // Sauvegarder les notifications mises à jour
+                    localStorage.setItem('geccp-notifications', JSON.stringify(allNotifications));
+                    
+                    // Recharger les notifications
+                    loadNotifications();
+                    updateNotificationsCount();
+                }
+            } catch (error) {
+                console.error('Erreur lors du marquage de la notification comme lue:', error);
+            }
+        }
+        
+        // Marquer toutes les notifications comme lues
+        function markAllNotificationsAsRead() {
+            try {
+                // Récupérer l'utilisateur depuis localStorage
+                const savedUser = localStorage.getItem('geccp-currentUser');
+                if (!savedUser) {
+                    return;
+                }
+                
+                const currentUser = JSON.parse(savedUser);
+                
+                // Récupérer les notifications depuis localStorage
+                const savedNotifications = localStorage.getItem('geccp-notifications');
+                let allNotifications = [];
+                
+                if (savedNotifications) {
+                    allNotifications = JSON.parse(savedNotifications);
+                }
+                
+                // Marquer toutes les notifications de l'utilisateur comme lues
+                allNotifications.forEach(notification => {
+                    if (notification.userId === currentUser.id && !notification.isRead) {
+                        notification.isRead = true;
+                        notification.readAt = new Date().toISOString();
+                    }
+                });
+                
+                // Sauvegarder les notifications mises à jour
+                localStorage.setItem('geccp-notifications', JSON.stringify(allNotifications));
+                
+                // Recharger les notifications
+                loadNotifications();
+                updateNotificationsCount();
+                
+            } catch (error) {
+                console.error('Erreur lors du marquage de toutes les notifications comme lues:', error);
+            }
+        }
+        
+        // Exposer les fonctions globalement
+        window.markNotificationAsRead = markNotificationAsRead;
+        window.markAllNotificationsAsRead = markAllNotificationsAsRead;
+        
+        // ========================================
+        // PERFORMANCE
+        // ========================================
+        
+        // Lazy loading pour les images
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.src = img.dataset.src;
+                        img.classList.remove('lazy');
+                        imageObserver.unobserve(img);
+                    }
+                });
+            });
+            
+            document.querySelectorAll('img[data-src]').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+        
+        // ========================================
+        // GESTION DE L'EN-TÊTE UTILISATEUR
+        // ========================================
+        
+        // Charger les informations utilisateur dans l'en-tête
+        function loadUserHeaderInfo() {
+            try {
+                // Vérifier d'abord la session active
+                let currentUser = null;
+                const sessionData = localStorage.getItem('currentSession');
+                
+                if (sessionData) {
+                    try {
+                        const session = JSON.parse(sessionData);
+                        // Récupérer l'utilisateur complet depuis les données GECC
+                        const geccData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+                        const users = geccData.users || [];
+                        currentUser = users.find(user => user.id === session.id);
+                    } catch (error) {
+                        console.error('Erreur lors de la lecture de la session:', error);
+                    }
+                }
+                
+                // Fallback vers l'ancien système si nécessaire
+                if (!currentUser) {
+                    const savedUser = localStorage.getItem('geccp-currentUser');
+                    if (savedUser) {
+                        currentUser = JSON.parse(savedUser);
+                    }
+                }
+                
+                if (!currentUser) {
+                    console.log('Aucun utilisateur connecté');
+                    return;
+                }
+                
+                // Mettre à jour l'avatar
+                const userAvatar = document.getElementById('userAvatar');
+                if (userAvatar) {
+                    if (currentUser.fullName) {
+                        const initials = currentUser.fullName.split(' ').map(n => n[0]).join('').toUpperCase();
+                        userAvatar.textContent = initials;
+                    } else {
+                        userAvatar.textContent = 'U';
+                    }
+                }
+                
+                // Mettre à jour le nom
+                const userName = document.getElementById('userName');
+                if (userName) {
+                    userName.textContent = currentUser.fullName || 'Utilisateur';
+                }
+                
+                // Mettre à jour le rôle
+                const userRole = document.getElementById('userRole');
+                if (userRole) {
+                    const roleMap = {
+                        'ADMIN': 'Administrateur',
+                        'SUPER_ADMIN': 'Super Administrateur',
+                        'ARCHITECT': 'Architecte',
+                        'ENGINEER': 'Ingénieur',
+                        'CONTRACTOR': 'Entrepreneur',
+                        'BET': 'Bureau d\'Études Techniques',
+                        'CLIENT': 'Client'
+                    };
+                    userRole.textContent = roleMap[currentUser.role] || currentUser.role;
+                }
+                
+                // Gérer l'affichage du lien d'administration
+                const adminLink = document.getElementById('adminLink');
+                if (adminLink) {
+                    console.log('Rôle utilisateur:', currentUser.role); // Debug
+                    if (currentUser.role === 'ADMIN' || currentUser.role === 'SUPER_ADMIN' || 
+                        currentUser.role === 'Administrator' || currentUser.role === 'admin') {
+                        adminLink.style.display = 'block';
+                        console.log('Lien d\'administration affiché'); // Debug
+                    } else {
+                        adminLink.style.display = 'none';
+                        console.log('Lien d\'administration masqué'); // Debug
+                    }
+                }
+                
+            } catch (error) {
+                console.error('Erreur lors du chargement des informations utilisateur:', error);
+            }
+        }
+        
+        // Gérer la navigation vers l'accueil
+        function handleHomeNavigation() {
+            const homeBtn = document.getElementById('logoutBtn');
+            if (homeBtn) {
+                // Le lien redirigera naturellement vers landing.html
+                // Pas besoin d'event listener supplémentaire
+            }
+        }
+        
+        // Gérer le basculement d'utilisateur
+        function setupUserSwitching() {
+            const switchButtons = document.querySelectorAll('.switch-user-btn');
+            switchButtons.forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const userItem = this.closest('.user-item');
+                    const userId = userItem.getAttribute('data-user-id');
+                    const userName = userItem.querySelector('.user-name').textContent;
+                    const userRole = userItem.querySelector('.user-role').textContent;
+                    
+                    // Créer l'objet utilisateur
+                    const newUser = {
+                        id: userId,
+                        fullName: userName,
+                        role: userRole,
+                        email: `${userName.toLowerCase().replace(' ', '.')}@gecc.com`,
+                        companyName: 'GECC Project',
+                        updatedAt: new Date().toISOString()
+                    };
+                    
+                    // Sauvegarder le nouvel utilisateur
+                    localStorage.setItem('geccp-currentUser', JSON.stringify(newUser));
+                    
+                    // Déclencher l'événement de basculement
+                    window.dispatchEvent(new CustomEvent('userSwitched', { 
+                        detail: { user: newUser } 
+                    }));
+                    
+                    // Afficher un message de confirmation
+                    if (typeof showToast === 'function') {
+                        showToast(`Connecté en tant que ${userName} (${userRole}) 🔄`, 'success');
+                    }
+                    
+                    console.log('🔄 Utilisateur basculé:', newUser);
+                });
+            });
+        }
+        
+        // Initialisation au chargement de la page
+        document.addEventListener('DOMContentLoaded', function() {
+            loadUserHeaderInfo();
+            handleHomeNavigation();
+            setupUserSwitching();
+            
+            // Gestionnaire pour le bouton de chargement des données demo
+            const loadDemoBtn = document.getElementById('loadDemoBtn');
+            if (loadDemoBtn) {
+                loadDemoBtn.addEventListener('click', function() {
+                    if (typeof localRepository !== 'undefined' && localRepository.loadDemoData) {
+                        try {
+                            localRepository.loadDemoData();
+                            alert('✅ Données de démo chargées avec succès !');
+                            // Recharger la page pour afficher les nouvelles données
+                            window.location.reload();
+                        } catch (error) {
+                            console.error('Erreur lors du chargement des données demo:', error);
+                            alert('❌ Erreur lors du chargement des données de démo');
+                        }
+                    } else {
+                        alert('❌ Fonction de chargement des données demo non disponible');
+                    }
+                });
+            }
+            
+            // Gestionnaire pour le bouton de déconnexion forcée
+            const forceLogoutBtn = document.getElementById('forceLogoutBtn');
+            if (forceLogoutBtn) {
+                forceLogoutBtn.addEventListener('click', function() {
+                    // Vider toutes les sessions
+                    localStorage.removeItem('currentSession');
+                    localStorage.removeItem('gecc_session');
+                    
+                    // Vider le cache de localRepository
+                    if (typeof localRepository !== 'undefined') {
+                        localRepository.currentUser = null;
+                        localRepository.clearSession();
+                    }
+                    
+                    // Forcer la mise à jour du header
+                    loadUserHeaderInfo();
+                    
+                    alert('✅ Déconnexion forcée effectuée ! Redirection vers la page de connexion...');
+                    
+                    // Rediriger vers la page de connexion
+                    setTimeout(() => {
+                        window.location.href = 'index.html';
+                    }, 1000);
+                });
+            }
+            
+            // Gestionnaire pour le bouton d'actualisation du header
+            const refreshHeaderBtn = document.getElementById('refreshHeaderBtn');
+            if (refreshHeaderBtn) {
+                refreshHeaderBtn.addEventListener('click', function() {
+                    console.log('🔄 Actualisation forcée du header...');
+                    loadUserHeaderInfo();
+                    alert('✅ Header actualisé !');
+                });
+            }
+            
+            // Charger les notifications si les fonctions existent
+            if (typeof loadNotifications === 'function') {
+                loadNotifications();
+            }
+            if (typeof updateNotificationsCount === 'function') {
+                updateNotificationsCount();
+            }
+            if (typeof createDemoNotifications === 'function') {
+                createDemoNotifications();
+            }
+            
+            // Écouter les mises à jour de profil
+            window.addEventListener('profileUpdated', function(event) {
+                console.log('🔄 Profil mis à jour, rechargement des informations...');
+                loadUserHeaderInfo();
+            });
+            
+            // Écouter les changements de session
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'currentSession') {
+                    console.log('🔄 Session changée, mise à jour du header...');
+                    loadUserHeaderInfo();
+                }
+            });
+            
+            // Écouter les changements de localStorage
+            window.addEventListener('storage', function(event) {
+                if (event.key === 'geccp-currentUser') {
+                    console.log('🔄 Utilisateur modifié dans localStorage, mise à jour...');
+                    loadUserHeaderInfo();
+                }
+            });
+            
+            // Écouter les changements d'utilisateur (basculement)
+            window.addEventListener('userSwitched', function(event) {
+                console.log('🔄 Utilisateur basculé, mise à jour de l\'en-tête...');
+                loadUserHeaderInfo();
+            });
+        });
+    </script>
+</body>
+</html>

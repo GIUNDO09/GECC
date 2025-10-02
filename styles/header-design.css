@@ -1,0 +1,308 @@
+/* ========================================
+   DESIGN D'EN-TÊTE UNIFIÉ - GECC PROJECT
+   ======================================== */
+
+/* Header principal */
+.header {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid #e2e8f0;
+    padding: 0;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .header {
+    background: rgba(15, 23, 42, 0.95);
+    border-bottom-color: #334155;
+}
+
+/* Container principal */
+.header .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 var(--spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 70px;
+}
+
+/* Logo section */
+.header .logo {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    text-decoration: none;
+    color: var(--text-primary);
+}
+
+.header .logo-icon {
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+    transition: all var(--transition-normal);
+}
+
+.header .logo-icon:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(79, 70, 229, 0.4);
+}
+
+.header .logo-text {
+    font-size: 18px;
+    font-weight: 800;
+    color: #4f46e5;
+    letter-spacing: -0.5px;
+}
+
+/* Navigation */
+.header .nav {
+    display: flex;
+    gap: var(--spacing-lg);
+    align-items: center;
+    flex: 1;
+    justify-content: center;
+}
+
+.header .nav-link {
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-weight: 500;
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--radius-sm);
+    transition: all var(--transition-fast);
+    position: relative;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.header .nav-link:hover {
+    color: var(--text-primary);
+    background: var(--bg-tertiary);
+}
+
+.header .nav-link.active {
+    color: #4f46e5;
+    font-weight: 600;
+    position: relative;
+}
+
+.header .nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 100%;
+    height: 2px;
+    background: #4f46e5;
+    border-radius: 1px;
+}
+
+/* Lien d'administration */
+.header .admin-link {
+    color: #f59e0b !important;
+}
+
+.header .admin-link:hover {
+    background: rgba(245, 158, 11, 0.1);
+}
+
+/* Section utilisateur */
+.header .user-section {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+}
+
+.header .user-info {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-fast);
+}
+
+[data-theme="dark"] .header .user-info {
+    background: rgba(30, 41, 59, 0.7);
+    border-color: #334155;
+}
+
+.header .user-info:hover {
+    background: rgba(255, 255, 255, 0.9);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .header .user-info:hover {
+    background: rgba(30, 41, 59, 0.9);
+}
+
+.header .user-avatar {
+    width: 32px;
+    height: 32px;
+    background: linear-gradient(135deg, #06b6d4 0%, #3b82f6 100%);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 12px;
+    flex-shrink: 0;
+}
+
+.header .user-details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.header .user-name {
+    color: var(--text-primary);
+    font-size: 13px;
+    font-weight: 600;
+    line-height: 1.2;
+}
+
+.header .user-role {
+    color: var(--text-muted);
+    font-size: 11px;
+    line-height: 1.2;
+}
+
+/* Bouton de déconnexion */
+.header .logout-btn {
+    background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+    color: white;
+    border: none;
+    padding: var(--spacing-sm) var(--spacing-md);
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+    box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+}
+
+.header .logout-btn:hover {
+    background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(239, 68, 68, 0.4);
+}
+
+.header .logout-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header .container {
+        padding: 0 var(--spacing-md);
+    }
+    
+    .header .nav {
+        gap: var(--spacing-md);
+    }
+    
+    .header .nav-link {
+        padding: var(--spacing-sm) var(--spacing-md);
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .header .container {
+        height: 60px;
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .header .logo-icon {
+        width: 36px;
+        height: 36px;
+        font-size: 14px;
+    }
+    
+    .header .logo-text {
+        font-size: 16px;
+    }
+    
+    .header .nav {
+        display: none; /* Masquer la navigation sur mobile */
+    }
+    
+    .header .user-info {
+        padding: var(--spacing-xs) var(--spacing-sm);
+    }
+    
+    .header .user-avatar {
+        width: 28px;
+        height: 28px;
+        font-size: 11px;
+    }
+    
+    .header .user-name {
+        font-size: 12px;
+    }
+    
+    .header .user-role {
+        font-size: 10px;
+    }
+    
+    .header .logout-btn {
+        padding: var(--spacing-xs) var(--spacing-sm);
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 480px) {
+    .header .user-details {
+        display: none; /* Masquer les détails utilisateur sur très petit écran */
+    }
+    
+    .header .logo-text {
+        display: none; /* Masquer le texte du logo sur très petit écran */
+    }
+}
+
+/* Animation d'entrée */
+@keyframes headerSlideIn {
+    from {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.header {
+    animation: headerSlideIn 0.5s ease-out;
+}
+
+/* Séparateur sous l'en-tête */
+.header-separator {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--border-color), transparent);
+    margin: 0;
+    border: none;
+}

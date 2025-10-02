@@ -1,0 +1,91 @@
+### Test des routes paramètres GECC
+
+### 1. Health Check
+GET http://localhost:3000/health
+
+### 2. Inscription d'un utilisateur (pour les tests)
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "settings@test.com",
+  "password": "password123",
+  "fullName": "Settings Test User",
+  "role": "architect",
+  "companyName": "Test Company",
+  "jobTitle": "Architecte"
+}
+
+### 3. Connexion
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "settings@test.com",
+  "password": "password123"
+}
+
+### 4. Récupérer mes paramètres
+GET http://localhost:3000/api/settings
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 5. Récupérer des paramètres spécifiques
+GET http://localhost:3000/api/settings?keys=theme,language
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 6. Récupérer seulement les paramètres publics
+GET http://localhost:3000/api/settings?public=true
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 7. Mettre à jour des paramètres
+PUT http://localhost:3000/api/settings
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "settings": {
+    "theme": "dark",
+    "language": "en",
+    "notifications": {
+      "email": true,
+      "push": false,
+      "project_updates": true,
+      "invitations": true
+    },
+    "dashboard_layout": {
+      "widgets": ["projects", "tasks"],
+      "columns": 3
+    }
+  }
+}
+
+### 8. Mettre à jour un paramètre personnalisé
+PUT http://localhost:3000/api/settings
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "settings": {
+    "custom_preference": "ma_valeur_personnalisee",
+    "favorite_color": "#ff5733",
+    "work_hours": {
+      "start": "09:00",
+      "end": "18:00",
+      "timezone": "Europe/Paris"
+    }
+  }
+}
+
+### 9. Supprimer un paramètre
+DELETE http://localhost:3000/api/settings/custom_preference
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 10. Réinitialiser les paramètres par défaut
+POST http://localhost:3000/api/settings/reset
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 11. Récupérer les paramètres publics d'un utilisateur
+GET http://localhost:3000/api/settings/public/USER_ID_HERE
+
+### 12. Documentation API
+GET http://localhost:3000/api/docs

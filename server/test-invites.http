@@ -1,0 +1,75 @@
+### Test des routes invitations GECC
+
+### 1. Health Check
+GET http://localhost:3000/health
+
+### 2. Inscription d'un utilisateur (pour les tests)
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "architect@test.com",
+  "password": "password123",
+  "fullName": "Architecte Test",
+  "role": "architect",
+  "companyName": "Test Company",
+  "jobTitle": "Architecte"
+}
+
+### 3. Connexion
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "architect@test.com",
+  "password": "password123"
+}
+
+### 4. Créer un projet (pour tester les invitations)
+POST http://localhost:3000/api/projects
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "code": "PROJ-2024-001",
+  "name": "Projet Test Invitations",
+  "description": "Projet pour tester les invitations",
+  "address": "123 Rue de la Paix, Paris",
+  "type": "residentiel",
+  "surfaceArea": 100.5,
+  "ownerName": "Maître d'ouvrage Test"
+}
+
+### 5. Créer une invitation
+POST http://localhost:3000/api/projects/PROJECT_ID_HERE/invites
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "email": "membre@test.com",
+  "role": "engineer"
+}
+
+### 6. Lister les invitations du projet
+GET http://localhost:3000/api/projects/PROJECT_ID_HERE/invites
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 7. Récupérer les détails d'une invitation (public)
+GET http://localhost:3000/api/invites/INVITE_TOKEN_HERE
+
+### 8. Accepter une invitation (sans être connecté)
+POST http://localhost:3000/api/invites/INVITE_TOKEN_HERE/accept
+Content-Type: application/json
+
+### 9. Accepter une invitation (en étant connecté)
+POST http://localhost:3000/api/invites/INVITE_TOKEN_HERE/accept
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+### 10. Annuler une invitation
+POST http://localhost:3000/api/invites/INVITE_ID_HERE/cancel
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+### 11. Documentation API
+GET http://localhost:3000/api/docs

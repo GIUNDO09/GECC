@@ -1,0 +1,2295 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paramètres | GECC - Gestion Électronique des Contrats de Construction</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles/design-system.css">
+    <meta name="description" content="Paramètres de votre compte GECC - Profil, entreprise, sécurité et préférences">
+    <style>
+        /* ========================================
+           DESIGN SYSTEM PREMIUM - SETTINGS
+           ======================================== */
+        
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --card-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            --bg-primary: #ffffff;
+            --bg-secondary: #f8fafc;
+            --bg-tertiary: #f1f5f9;
+            --text-primary: #1e293b;
+            --text-secondary: #64748b;
+            --text-muted: #94a3b8;
+            --border-color: #e2e8f0;
+            --border-hover: #cbd5e1;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --spacing-lg: 24px;
+            --spacing-md: 16px;
+            --spacing-sm: 12px;
+            --spacing-xs: 8px;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* ========================================
+           THÈME SOMBRE
+           ======================================== */
+        
+        [data-theme="dark"] {
+            --bg-primary: #0f172a;
+            --bg-secondary: #1e293b;
+            --bg-tertiary: #334155;
+            --text-primary: #f1f5f9;
+            --text-secondary: #cbd5e1;
+            --text-muted: #64748b;
+            --border-color: #334155;
+            --border-hover: #475569;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.4), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.4), 0 10px 10px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        [data-theme="dark"] .settings-sidebar {
+            background: var(--bg-primary);
+            border-right-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .settings-toolbar {
+            background: var(--bg-primary);
+            border-bottom-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .settings-card {
+            background: var(--bg-primary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .card-section {
+            border-bottom-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .form-input {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .form-input:focus {
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+
+        [data-theme="dark"] .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        [data-theme="dark"] .avatar-section {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .avatar-section:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+        }
+
+        [data-theme="dark"] .btn-secondary {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+        }
+
+        [data-theme="dark"] .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        [data-theme="dark"] .btn-outline:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .refresh-btn {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        [data-theme="dark"] .refresh-btn:hover {
+            background: var(--bg-tertiary);
+        }
+
+        [data-theme="dark"] .back-btn {
+            background: var(--bg-secondary);
+            border-color: var(--border-color);
+            color: var(--text-secondary);
+        }
+
+        [data-theme="dark"] .back-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+        }
+
+        [data-theme="dark"] .toast {
+            background: var(--bg-primary);
+            border-color: var(--border-color);
+            color: var(--text-primary);
+        }
+
+        /* ========================================
+           LAYOUT PRINCIPAL - 100VH SANS SCROLL
+           ======================================== */
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .settings-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* ========================================
+           SIDEBAR NAVIGATION - 260PX
+           ======================================== */
+        
+        .settings-sidebar {
+            width: 260px;
+            background: var(--bg-primary);
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .settings-header {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-primary);
+        }
+
+        .settings-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0 0 var(--spacing-xs) 0;
+            background: var(--card-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .settings-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
+            line-height: 1.5;
+        }
+
+        .settings-nav {
+            flex: 1;
+            padding: var(--spacing-md) 0;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            padding: var(--spacing-md) var(--spacing-lg);
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            border: none;
+            background: none;
+            width: 100%;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .nav-item.active {
+            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            color: white;
+            position: relative;
+        }
+
+        .nav-item.active::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 3px;
+            height: 20px;
+            background: white;
+            border-radius: 2px 0 0 2px;
+        }
+
+        .nav-icon {
+            width: 20px;
+            height: 20px;
+            margin-right: var(--spacing-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .nav-label {
+            flex: 1;
+        }
+
+        /* ========================================
+           MAIN CONTENT AREA
+           ======================================== */
+        
+        .settings-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .settings-toolbar {
+            padding: var(--spacing-lg);
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .toolbar-left {
+            display: flex;
+            align-items: center;
+        }
+
+        .back-btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            text-decoration: none;
+        }
+
+        .back-btn:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+            border-color: var(--border-hover);
+            transform: translateX(-2px);
+        }
+
+        .toolbar-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+
+        .refresh-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 16px;
+        }
+
+        .refresh-btn:hover {
+            background: var(--bg-tertiary);
+            transform: scale(1.05);
+        }
+
+        .settings-content {
+            flex: 1;
+            padding: var(--spacing-lg);
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* ========================================
+           CARDS ET FORMULAIRES
+           ======================================== */
+        
+        .settings-card {
+            background: var(--bg-primary);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            transition: var(--transition);
+        }
+
+        .settings-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .card-section {
+            padding: var(--spacing-lg);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .card-section:last-child {
+            border-bottom: none;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 var(--spacing-xs) 0;
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+        }
+
+        .section-subtitle {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0 0 var(--spacing-lg) 0;
+            line-height: 1.5;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-primary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .form-input {
+            padding: var(--spacing-md);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            transition: var(--transition);
+            background: var(--bg-primary);
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .form-help {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: var(--spacing-xs);
+            font-style: italic;
+        }
+
+        /* ========================================
+           AVATAR SECTION
+           ======================================== */
+        
+        .avatar-section {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+            padding: var(--spacing-lg);
+            border: 2px dashed var(--border-color);
+            border-radius: var(--radius-md);
+            background: var(--bg-secondary);
+            transition: var(--transition);
+        }
+
+        .avatar-section:hover {
+            border-color: var(--border-hover);
+            background: var(--bg-tertiary);
+        }
+
+        .avatar-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--card-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-info {
+            flex: 1;
+        }
+
+        .avatar-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 0 0 var(--spacing-xs) 0;
+        }
+
+        .avatar-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0 0 var(--spacing-sm) 0;
+        }
+
+        .avatar-requirements {
+            font-size: 12px;
+            color: var(--text-muted);
+            margin: 0;
+        }
+
+        .avatar-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        /* ========================================
+           BOUTONS
+           ======================================== */
+        
+        .btn {
+            padding: var(--spacing-sm) var(--spacing-md);
+            border-radius: var(--radius-sm);
+            border: 1px solid transparent;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            text-decoration: none;
+            background: none;
+        }
+
+        .btn-primary {
+            background: var(--card-gradient);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border-color: var(--border-color);
+        }
+
+        .btn-secondary:hover {
+            background: var(--bg-tertiary);
+            border-color: var(--border-hover);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--text-secondary);
+            border-color: var(--border-color);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+            padding-top: var(--spacing-lg);
+            border-top: 1px solid var(--border-color);
+            margin-top: var(--spacing-lg);
+        }
+
+        /* ========================================
+           RESPONSIVE DESIGN
+           ======================================== */
+        
+        @media (max-width: 768px) {
+            .settings-container {
+                flex-direction: column;
+            }
+
+            .settings-sidebar {
+                width: 100%;
+                height: auto;
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .settings-nav {
+                display: flex;
+                overflow-x: auto;
+                padding: var(--spacing-sm) 0;
+            }
+
+            .nav-item {
+                flex-shrink: 0;
+                padding: var(--spacing-sm) var(--spacing-md);
+                white-space: nowrap;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .avatar-section {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+
+        }
+
+        /* ========================================
+           ANIMATIONS ET TRANSITIONS
+           ======================================== */
+        
+        @media (prefers-reduced-motion: no-preference) {
+            .settings-card {
+                animation: fadeInUp 0.3s ease-out;
+            }
+
+            @keyframes fadeInUp {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+        }
+
+        /* ========================================
+           TOAST NOTIFICATIONS
+           ======================================== */
+        
+        .toast-container {
+            position: fixed;
+            top: var(--spacing-lg);
+            right: var(--spacing-lg);
+            z-index: 1000;
+        }
+
+        .toast {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-md);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--spacing-sm);
+            transform: translateX(100%);
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-left: 4px solid #10b981;
+        }
+
+        .toast.error {
+            border-left: 4px solid #ef4444;
+        }
+
+        /* ========================================
+           LOADING STATES
+           ======================================== */
+        
+        .btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .btn.loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            border: 2px solid transparent;
+            border-top: 2px solid currentColor;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: translate(-50%, -50%) rotate(360deg);
+            }
+        }
+
+        /* ========================================
+           STYLES POUR LA SAUVEGARDE
+           ======================================== */
+        
+        .data-section {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-secondary);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .data-section h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--text-primary);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .data-section p {
+            margin: 0 0 1rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .backup-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            padding: 0.75rem;
+            background: var(--bg-primary);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .status-indicator {
+            font-size: 1.2rem;
+        }
+
+        .status-text {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .data-info {
+            margin-top: 1.5rem;
+        }
+
+        .alert {
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid;
+            margin-bottom: 1rem;
+        }
+
+        .alert-info {
+            background: #e0f2fe;
+            border-left-color: #0288d1;
+            color: #01579b;
+        }
+
+        .alert-warning {
+            background: #fff3e0;
+            border-left-color: #f57c00;
+            color: #e65100;
+        }
+
+        .alert-error {
+            background: #ffebee;
+            border-left-color: #d32f2f;
+            color: #c62828;
+        }
+
+        .alert-success {
+            background: #e8f5e8;
+            border-left-color: #388e3c;
+            color: #2e7d32;
+        }
+
+        /* ========================================
+           STYLES POUR LES NOUVEAUX ONGLETS
+           ======================================== */
+        
+        /* Avatar et Logo Upload */
+        .avatar-upload-section, .logo-upload-section {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .avatar-preview, .logo-preview {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-secondary);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+
+        .logo-preview {
+            border-radius: 8px;
+        }
+
+        .avatar-preview img, .logo-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-placeholder, .logo-placeholder {
+            font-size: 2rem;
+            color: var(--text-muted);
+        }
+
+        .avatar-upload-controls, .logo-upload-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Form Grid */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+        }
+
+        .form-input {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            transition: border-color 0.2s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4f46e5;
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+        }
+
+        .form-input:readonly {
+            background: var(--bg-secondary);
+            color: var(--text-muted);
+        }
+
+        .input-hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 0.25rem;
+        }
+
+        /* Form Actions */
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .avatar-upload-section, .logo-upload-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .avatar-upload-controls, .logo-upload-controls {
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+        }
+
+        /* ========================================
+           STYLES POUR LE MENU DÉROULANT UTILISATEUR
+           ======================================== */
+        
+        .user-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .user-info:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .user-details {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .user-name {
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 14px;
+            line-height: 1.2;
+        }
+
+        .user-role {
+            font-size: 12px;
+            color: #64748b;
+            line-height: 1.2;
+        }
+
+        .dropdown-arrow {
+            font-size: 10px;
+            color: #64748b;
+            transition: transform 0.2s ease;
+        }
+
+        .user-info:hover .dropdown-arrow {
+            transform: rotate(180deg);
+        }
+
+        .user-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            border: 1px solid #e2e8f0;
+            min-width: 200px;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s ease;
+            margin-top: 8px;
+        }
+
+        .user-dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-size: 14px;
+            color: #374151;
+        }
+
+        .dropdown-item:first-child {
+            border-radius: 12px 12px 0 0;
+        }
+
+        .dropdown-item:last-child {
+            border-radius: 0 0 12px 12px;
+        }
+
+        .dropdown-item:hover {
+            background: #f8fafc;
+        }
+
+        .dropdown-icon {
+            font-size: 16px;
+            width: 20px;
+            text-align: center;
+        }
+
+        .dropdown-separator {
+            height: 1px;
+            background: #e2e8f0;
+            margin: 4px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="settings-container">
+        <!-- Sidebar Navigation -->
+        <div class="settings-sidebar">
+            <div class="settings-header">
+                <h1 class="settings-title">Paramètres</h1>
+                <p class="settings-subtitle">Gérez votre profil, vos préférences et les paramètres de votre compte</p>
+            </div>
+            
+            <nav class="settings-nav">
+                <button class="nav-item" data-tab="profile">
+                    <span class="nav-icon">👤</span>
+                    <span class="nav-label">Profil</span>
+                </button>
+                <button class="nav-item" data-tab="company">
+                    <span class="nav-icon">🏢</span>
+                    <span class="nav-label">Entreprise</span>
+                </button>
+                <button class="nav-item" data-tab="security">
+                    <span class="nav-icon">🔒</span>
+                    <span class="nav-label">Sécurité</span>
+                </button>
+                <button class="nav-item active" data-tab="preferences">
+                    <span class="nav-icon">⚙️</span>
+                    <span class="nav-label">Préférences</span>
+                </button>
+                <button class="nav-item" data-tab="notifications">
+                    <span class="nav-icon">🔔</span>
+                    <span class="nav-label">Notifications</span>
+                </button>
+                <button class="nav-item" data-tab="data">
+                    <span class="nav-icon">💾</span>
+                    <span class="nav-label">Données</span>
+                </button>
+            </nav>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="settings-main">
+            <div class="settings-toolbar">
+                <div class="toolbar-left">
+                    <button class="back-btn" id="backBtn" title="Retour">
+                        ← Retour
+                    </button>
+                </div>
+                <div class="toolbar-actions">
+                    <button class="refresh-btn" id="refreshBtn" title="Actualiser">
+                        🔄
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-content">
+
+                <!-- Onglet Profil -->
+                <div id="tab-profile" class="tab-content">
+                    <div class="settings-card">
+                        <div class="card-section">
+                            <h2 class="section-title">
+                                <span>👤</span>
+                                Informations personnelles
+                            </h2>
+                            <p class="section-subtitle">Gérez vos informations de profil et votre avatar</p>
+                            
+                            <form id="profileForm" class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="profileFullName">NOM COMPLET</label>
+                                    <input type="text" id="profileFullName" name="fullName" class="form-input" placeholder="Votre nom complet" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="profileEmail">EMAIL</label>
+                                    <input type="email" id="profileEmail" name="email" class="form-input" readonly>
+                                    <div class="input-hint">L'email ne peut pas être modifié car il est utilisé comme identifiant</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="profileJobTitle">FONCTION/POSTE</label>
+                                    <input type="text" id="profileJobTitle" name="jobTitle" class="form-input" placeholder="Votre fonction ou poste">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="profilePhone">TÉLÉPHONE</label>
+                                    <input type="tel" id="profilePhone" name="phone" class="form-input" placeholder="Votre numéro de téléphone">
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <label class="form-label" for="profileAvatar">AVATAR</label>
+                                    <div class="avatar-upload-section">
+                                        <div class="avatar-preview" id="avatarPreview">
+                                            <div class="avatar-placeholder">👤</div>
+                                        </div>
+                                        <div class="avatar-upload-controls">
+                                            <input type="file" id="profileAvatar" name="avatar" class="file-input" accept="image/*">
+                                            <button type="button" class="btn btn-outline" onclick="document.getElementById('profileAvatar').click()">
+                                                📷 Choisir une image
+                                            </button>
+                                            <button type="button" class="btn btn-outline" onclick="removeAvatar()">
+                                                🗑️ Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="input-hint">Format accepté : JPG, PNG, SVG (max 2MB). L'image sera convertie en base64.</div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-section">
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="resetProfileForm()">
+                                    🔄 Réinitialiser
+                                </button>
+                                <button type="submit" form="profileForm" class="btn btn-primary">
+                                    ✓ Enregistrer le profil
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Entreprise -->
+                <div id="tab-company" class="tab-content">
+                    <div class="settings-card">
+                        <div class="card-section">
+                            <h2 class="section-title">
+                                <span>🏢</span>
+                                Informations entreprise
+                            </h2>
+                            <p class="section-subtitle">Gérez les informations de votre entreprise</p>
+                            
+                            <form id="companyForm" class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="companyName">NOM DE L'ENTREPRISE</label>
+                                    <input type="text" id="companyName" name="name" class="form-input" placeholder="Nom de votre entreprise">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="companyAddress">ADRESSE</label>
+                                    <textarea id="companyAddress" name="address" class="form-input" rows="3" placeholder="Adresse complète de l'entreprise"></textarea>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="companyWebsite">SITE WEB</label>
+                                    <input type="url" id="companyWebsite" name="website" class="form-input" placeholder="https://www.votre-entreprise.com">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="companyPhone">TÉLÉPHONE</label>
+                                    <input type="tel" id="companyPhone" name="phone" class="form-input" placeholder="Numéro de téléphone de l'entreprise">
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="companyVatNumber">NUMÉRO TVA (Optionnel)</label>
+                                    <input type="text" id="companyVatNumber" name="vatNumber" class="form-input" placeholder="Numéro de TVA intracommunautaire">
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <label class="form-label" for="companyLogo">LOGO ENTREPRISE</label>
+                                    <div class="logo-upload-section">
+                                        <div class="logo-preview" id="logoPreview">
+                                            <div class="logo-placeholder">🏢</div>
+                                        </div>
+                                        <div class="logo-upload-controls">
+                                            <input type="file" id="companyLogo" name="logo" class="file-input" accept="image/*">
+                                            <button type="button" class="btn btn-outline" onclick="document.getElementById('companyLogo').click()">
+                                                🖼️ Choisir un logo
+                                            </button>
+                                            <button type="button" class="btn btn-outline" onclick="removeLogo()">
+                                                🗑️ Supprimer
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="input-hint">Format accepté : JPG, PNG, SVG (max 2MB). Le logo sera converti en base64.</div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-section">
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="resetCompanyForm()">
+                                    🔄 Réinitialiser
+                                </button>
+                                <button type="submit" form="companyForm" class="btn btn-primary">
+                                    ✓ Enregistrer l'entreprise
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Sécurité -->
+                <div id="tab-security" class="tab-content">
+                    <div class="settings-card">
+                        <div class="card-section">
+                            <h2 class="section-title">
+                                <span>🔒</span>
+                                Sécurité du compte
+                            </h2>
+                            <p class="section-subtitle">Gérez votre mot de passe et les paramètres de sécurité</p>
+                            
+                            <div class="alert alert-warning">
+                                <strong>⚠️ Avertissement MVP :</strong> Ce système utilise localStorage et n'est pas sécurisé pour la production. 
+                                En production, il faut un backend sécurisé avec hash côté serveur, politique de complexité, et authentification à deux facteurs.
+                            </div>
+                            
+                            <form id="securityForm" class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="currentPassword">MOT DE PASSE ACTUEL</label>
+                                    <input type="password" id="currentPassword" name="currentPassword" class="form-input" placeholder="Votre mot de passe actuel" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="newPassword">NOUVEAU MOT DE PASSE</label>
+                                    <input type="password" id="newPassword" name="newPassword" class="form-input" placeholder="Nouveau mot de passe (min 6 caractères)">
+                                    <div class="input-hint">Le mot de passe doit contenir au moins 6 caractères</div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="confirmPassword">CONFIRMER LE MOT DE PASSE</label>
+                                    <input type="password" id="confirmPassword" name="confirmPassword" class="form-input" placeholder="Confirmez le nouveau mot de passe">
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-section">
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" onclick="resetSecurityForm()">
+                                    🔄 Réinitialiser
+                                </button>
+                                <button type="submit" form="securityForm" class="btn btn-primary">
+                                    ✓ Changer le mot de passe
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Préférences -->
+                <div id="tab-preferences" class="tab-content active">
+                    <div class="settings-card">
+                        <div class="card-section">
+                            <h2 class="section-title">
+                                <span>⚙️</span>
+                                Préférences générales
+                            </h2>
+                            <p class="section-subtitle">Personnalisez votre expérience utilisateur</p>
+                            
+                            <form id="preferencesForm" class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label" for="language">LANGUE</label>
+                                    <select id="language" name="language" class="form-input">
+                                        <option value="fr">Français</option>
+                                        <option value="en">English</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="timezone">FUSEAU HORAIRE</label>
+                                    <select id="timezone" name="timezone" class="form-input">
+                                        <option value="Europe/Paris">Europe/Paris (UTC+1)</option>
+                                        <option value="Europe/London">Europe/London (UTC+0)</option>
+                                        <option value="America/New_York">America/New_York (UTC-5)</option>
+                                        <option value="UTC">UTC (UTC+0)</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="theme">THÈME</label>
+                                    <select id="theme" name="theme" class="form-input">
+                                        <option value="light">Clair</option>
+                                        <option value="dark">Sombre</option>
+                                        <option value="system">Système</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label class="form-label" for="units">UNITÉS</label>
+                                    <select id="units" name="units" class="form-input">
+                                        <option value="metric">Métrique</option>
+                                        <option value="imperial">Impérial</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-section">
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" id="resetPreferencesBtn">
+                                    🔄 Réinitialiser
+                                </button>
+                                <button type="submit" form="preferencesForm" class="btn btn-primary">
+                                    ✓ Enregistrer les préférences
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Notifications -->
+                <div id="tab-notifications" class="tab-content">
+                    <div class="settings-card">
+                        <div class="card-section">
+                            <h2 class="section-title">
+                                <span>🔔</span>
+                                Préférences de notifications
+                            </h2>
+                            <p class="section-subtitle">Configurez les notifications que vous souhaitez recevoir</p>
+                            
+                            <form id="notificationsForm">
+                                <div class="notification-section">
+                                    <h3>Types de notifications</h3>
+                                    <div class="notification-options">
+                                        <div class="notification-option">
+                                            <label class="switch">
+                                                <input type="checkbox" id="notifInvitations" name="invitations" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <div class="notification-info">
+                                                <strong>Invitations</strong>
+                                                <p>Nouvelles invitations à rejoindre des projets</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="notification-option">
+                                            <label class="switch">
+                                                <input type="checkbox" id="notifSubmissions" name="submissions" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <div class="notification-info">
+                                                <strong>Soumissions de documents</strong>
+                                                <p>Nouveaux documents soumis pour validation</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="notification-option">
+                                            <label class="switch">
+                                                <input type="checkbox" id="notifVisas" name="visas" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <div class="notification-info">
+                                                <strong>Visas et observations</strong>
+                                                <p>Nouveaux visas et observations sur les documents</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="notification-option">
+                                            <label class="switch">
+                                                <input type="checkbox" id="notifComments" name="comments" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <div class="notification-info">
+                                                <strong>Commentaires</strong>
+                                                <p>Nouveaux commentaires sur les projets</p>
+                                            </div>
+                                        </div>
+
+                                        <div class="notification-option">
+                                            <label class="switch">
+                                                <input type="checkbox" id="notifTasks" name="tasks" checked>
+                                                <span class="slider"></span>
+                                            </label>
+                                            <div class="notification-info">
+                                                <strong>Tâches</strong>
+                                                <p>Nouvelles tâches assignées et mises à jour</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="card-section">
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" id="resetNotificationsBtn">
+                                    🔄 Réinitialiser
+                                </button>
+                                <button type="submit" form="notificationsForm" class="btn btn-primary">
+                                    ✓ Enregistrer les préférences
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Onglet Données -->
+                <div id="tab-data" class="tab-content">
+                    <div class="settings-card">
+                        <div class="card-section">
+                            <h2 class="section-title">
+                                <span>💾</span>
+                                Gestion des données
+                            </h2>
+                            <p class="section-subtitle">Exportez ou supprimez vos données</p>
+                            
+                            <div class="data-section">
+                                <h3>💾 Sauvegarde automatique</h3>
+                                <p>Vos données sont automatiquement sauvegardées toutes les 5 minutes.</p>
+                                <div class="backup-status" id="backupStatus">
+                                    <span class="status-indicator">🔄</span>
+                                    <span class="status-text">Sauvegarde en cours...</span>
+                                </div>
+                                <button type="button" id="createBackupBtn" class="btn btn-primary">
+                                    💾 Créer une sauvegarde maintenant
+                                </button>
+                            </div>
+
+                            <div class="data-section">
+                                <h3>📥 Export des données</h3>
+                                <p>Téléchargez une copie de toutes vos données au format JSON.</p>
+                                <button type="button" id="exportDataBtn" class="btn btn-secondary">
+                                    📥 Exporter mes données
+                                </button>
+                            </div>
+
+                            <div class="data-section">
+                                <h3>📤 Import des données</h3>
+                                <p>Restaurer vos données depuis un fichier de sauvegarde.</p>
+                                <input type="file" id="importFileInput" accept=".json" style="display: none;">
+                                <button type="button" id="importDataBtn" class="btn btn-secondary">
+                                    📤 Importer des données
+                                </button>
+                            </div>
+
+                            <div class="data-section">
+                                <h3>🗑️ Suppression des données</h3>
+                                <p>Supprimez définitivement toutes vos données. Cette action est irréversible.</p>
+                                <button type="button" id="deleteDataBtn" class="btn btn-outline">
+                                    🗑️ Supprimer toutes mes données
+                                </button>
+                            </div>
+
+                            <div class="data-info">
+                                <div class="alert alert-info">
+                                    <strong>ℹ️ Informations :</strong>
+                                    <p>Vos données sont stockées localement dans votre navigateur. Elles ne sont pas synchronisées avec un serveur.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Scripts -->
+    <script>
+        // ========================================
+        // SETTINGS PAGE FUNCTIONALITY
+        // ========================================
+        
+        class SettingsManager {
+            constructor() {
+                this.currentTab = 'preferences';
+                this.init();
+            }
+
+            init() {
+                this.setupNavigation();
+                this.setupForms();
+                this.setupAvatar();
+                this.setupThemeToggle();
+                this.loadUserData();
+            }
+
+            setupNavigation() {
+                const navItems = document.querySelectorAll('.nav-item');
+                const tabContents = document.querySelectorAll('.tab-content');
+
+                navItems.forEach(item => {
+                    item.addEventListener('click', () => {
+                        const tabId = item.dataset.tab;
+                        this.switchTab(tabId);
+                    });
+                });
+            }
+
+            switchTab(tabId) {
+                // Update navigation
+                document.querySelectorAll('.nav-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                document.querySelector(`[data-tab="${tabId}"]`).classList.add('active');
+
+                // Update content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.getElementById(`tab-${tabId}`).classList.add('active');
+
+                this.currentTab = tabId;
+            }
+
+            setupForms() {
+                // Profile form
+                document.getElementById('profileForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveProfile();
+                });
+
+                // Company form
+                document.getElementById('companyForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveCompany();
+                });
+
+                // Security form
+                document.getElementById('securityForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveSecurity();
+                });
+
+                // Preferences form
+                document.getElementById('preferencesForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.savePreferences();
+                });
+
+                // Notifications form
+                document.getElementById('notificationsForm').addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    this.saveNotifications();
+                });
+
+                // Reset buttons
+
+
+                document.getElementById('resetPreferencesBtn').addEventListener('click', () => {
+                    this.resetForm('preferencesForm');
+                });
+
+                document.getElementById('resetNotificationsBtn').addEventListener('click', () => {
+                    this.resetForm('notificationsForm');
+                });
+
+                // Gestionnaires pour la sauvegarde
+                document.getElementById('createBackupBtn').addEventListener('click', () => {
+                    this.createBackup();
+                });
+
+                document.getElementById('exportDataBtn').addEventListener('click', () => {
+                    this.exportData();
+                });
+
+                document.getElementById('importDataBtn').addEventListener('click', () => {
+                    document.getElementById('importFileInput').click();
+                });
+
+                document.getElementById('importFileInput').addEventListener('change', (e) => {
+                    this.importData(e.target.files[0]);
+                });
+
+                document.getElementById('deleteDataBtn').addEventListener('click', () => {
+                    this.deleteAllData();
+                });
+            }
+
+            setupAvatar() {
+                const uploadBtn = document.getElementById('uploadAvatarBtn');
+                const removeBtn = document.getElementById('removeAvatarBtn');
+                const fileInput = document.getElementById('avatarUpload');
+                const preview = document.getElementById('avatarPreview');
+                const placeholder = document.getElementById('avatarPlaceholder');
+
+                // Vérifier que tous les éléments existent
+                if (!uploadBtn || !removeBtn || !fileInput || !preview) {
+                    console.warn('Éléments d\'avatar non trouvés, setupAvatar ignoré');
+                    return;
+                }
+
+                uploadBtn.addEventListener('click', () => {
+                    fileInput.click();
+                });
+
+                fileInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            preview.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
+                            removeBtn.style.display = 'inline-flex';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+                removeBtn.addEventListener('click', () => {
+                    preview.innerHTML = '<div id="avatarPlaceholder">👤</div>';
+                    fileInput.value = '';
+                    removeBtn.style.display = 'none';
+                });
+            }
+
+            setupThemeToggle() {
+                const refreshBtn = document.getElementById('refreshBtn');
+                const backBtn = document.getElementById('backBtn');
+
+                // Charger le thème sauvegardé
+                this.loadTheme();
+
+                refreshBtn.addEventListener('click', () => {
+                    this.showToast('Page actualisée', 'success');
+                });
+
+                backBtn.addEventListener('click', () => {
+                    this.goBack();
+                });
+            }
+
+            goBack() {
+                // Vérifier s'il y a une page précédente dans l'historique
+                if (window.history.length > 1) {
+                    // Retourner à la page précédente
+                    window.history.back();
+                } else {
+                    // Si pas d'historique, rediriger vers le dashboard
+                    window.location.href = 'dashboard.html';
+                }
+            }
+
+            loadTheme() {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                this.applyTheme(savedTheme);
+            }
+
+            toggleTheme() {
+                const currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                
+                this.applyTheme(newTheme);
+                localStorage.setItem('theme', newTheme);
+                
+                this.showToast(`Thème ${newTheme === 'light' ? 'clair' : 'sombre'} activé`, 'success');
+            }
+
+            applyTheme(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                
+                // Le thème est géré par le gestionnaire global
+                
+                // Mettre à jour le sélecteur de thème dans les préférences
+                const themeSelect = document.getElementById('theme');
+                if (themeSelect) {
+                    themeSelect.value = theme;
+                }
+            }
+
+            loadUserData() {
+                // Load user data from localStorage or API
+                const userData = JSON.parse(localStorage.getItem('currentUser') || '{}');
+                
+
+                // Load preferences
+                const preferences = JSON.parse(localStorage.getItem('userPreferences') || '{}');
+                if (preferences.language) {
+                    document.getElementById('language').value = preferences.language;
+                    this.applyLanguage(preferences.language);
+                }
+                if (preferences.timezone) {
+                    document.getElementById('timezone').value = preferences.timezone;
+                    this.applyTimezone(preferences.timezone);
+                }
+                if (preferences.theme) {
+                    document.getElementById('theme').value = preferences.theme;
+                    this.applyTheme(preferences.theme);
+                }
+                if (preferences.units) {
+                    document.getElementById('units').value = preferences.units;
+                    this.applyUnits(preferences.units);
+                }
+
+
+                // Load notification preferences
+                const notificationPrefs = JSON.parse(localStorage.getItem('notificationPreferences') || '{}');
+                if (notificationPrefs.invitations !== undefined) {
+                    document.getElementById('notifInvitations').checked = notificationPrefs.invitations;
+                }
+                if (notificationPrefs.submissions !== undefined) {
+                    document.getElementById('notifSubmissions').checked = notificationPrefs.submissions;
+                }
+                if (notificationPrefs.visas !== undefined) {
+                    document.getElementById('notifVisas').checked = notificationPrefs.visas;
+                }
+                if (notificationPrefs.comments !== undefined) {
+                    document.getElementById('notifComments').checked = notificationPrefs.comments;
+                }
+                if (notificationPrefs.tasks !== undefined) {
+                    document.getElementById('notifTasks').checked = notificationPrefs.tasks;
+                }
+            }
+
+
+
+            savePreferences() {
+                const formData = new FormData(document.getElementById('preferencesForm'));
+                const data = Object.fromEntries(formData);
+                
+                try {
+                    // Sauvegarder les préférences
+                    localStorage.setItem('userPreferences', JSON.stringify(data));
+                    
+                    // Appliquer le thème immédiatement
+                    if (data.theme) {
+                        this.applyTheme(data.theme);
+                    }
+                    
+                    // Appliquer la langue
+                    if (data.language) {
+                        this.applyLanguage(data.language);
+                    }
+                    
+                    // Appliquer le fuseau horaire
+                    if (data.timezone) {
+                        this.applyTimezone(data.timezone);
+                    }
+                    
+                    // Appliquer les unités
+                    if (data.units) {
+                        this.applyUnits(data.units);
+                    }
+                    
+                    this.showToast('Préférences sauvegardées et appliquées', 'success');
+                } catch (error) {
+                    console.error('Erreur lors de la sauvegarde des préférences:', error);
+                    this.showToast('Erreur lors de la sauvegarde', 'error');
+                }
+            }
+
+            // Appliquer le thème
+            applyTheme(theme) {
+                const body = document.body;
+                const html = document.documentElement;
+                
+                if (theme === 'system') {
+                    // Détecter la préférence système
+                    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                    theme = prefersDark ? 'dark' : 'light';
+                }
+                
+                body.setAttribute('data-theme', theme);
+                html.setAttribute('data-theme', theme);
+                
+                // Déclencher un événement pour notifier les autres composants
+                window.dispatchEvent(new CustomEvent('themeChanged', { 
+                    detail: { theme: theme } 
+                }));
+            }
+
+            // Appliquer la langue
+            applyLanguage(language) {
+                // Pour le MVP, on stocke juste la préférence
+                // En production, on utiliserait un système d'internationalisation
+                document.documentElement.lang = language;
+                
+                // Déclencher un événement pour notifier les autres composants
+                window.dispatchEvent(new CustomEvent('languageChanged', { 
+                    detail: { language: language } 
+                }));
+            }
+
+            // Appliquer le fuseau horaire
+            applyTimezone(timezone) {
+                // Pour le MVP, on stocke juste la préférence
+                // En production, on formaterait les dates selon le fuseau
+                window.userTimezone = timezone;
+                
+                // Déclencher un événement pour notifier les autres composants
+                window.dispatchEvent(new CustomEvent('timezoneChanged', { 
+                    detail: { timezone: timezone } 
+                }));
+            }
+
+            // Appliquer les unités
+            applyUnits(units) {
+                // Pour le MVP, on stocke juste la préférence
+                // En production, on convertirait les valeurs selon les unités
+                window.userUnits = units;
+                
+                // Déclencher un événement pour notifier les autres composants
+                window.dispatchEvent(new CustomEvent('unitsChanged', { 
+                    detail: { units: units } 
+                }));
+            }
+
+            saveNotifications() {
+                const formData = new FormData(document.getElementById('notificationsForm'));
+                const data = Object.fromEntries(formData);
+                
+                // Convertir les checkboxes en booléens
+                const notificationPrefs = {
+                    invitations: data.invitations === 'on',
+                    submissions: data.submissions === 'on',
+                    visas: data.visas === 'on',
+                    comments: data.comments === 'on',
+                    tasks: data.tasks === 'on'
+                };
+                
+                try {
+                    localStorage.setItem('notificationPreferences', JSON.stringify(notificationPrefs));
+                    
+                    // Déclencher un événement pour notifier le dashboard
+                    window.dispatchEvent(new CustomEvent('notificationPreferencesChanged', { 
+                        detail: { preferences: notificationPrefs } 
+                    }));
+                    
+                    this.showToast('Préférences de notifications sauvegardées', 'success');
+                } catch (error) {
+                    console.error('Erreur lors de la sauvegarde des préférences de notifications:', error);
+                    this.showToast('Erreur lors de la sauvegarde', 'error');
+                }
+            }
+
+            resetForm(formId) {
+                document.getElementById(formId).reset();
+                this.showToast('Formulaire réinitialisé', 'success');
+            }
+
+            // Méthodes de sauvegarde
+            createBackup() {
+                try {
+                    if (window.GECC && window.GECC.backup) {
+                        const backup = window.GECC.backup.create(); // Sauvegarde sans téléchargement
+                        if (backup) {
+                            this.updateBackupStatus('✅ Dernière sauvegarde: ' + new Date(backup.timestamp).toLocaleString());
+                            this.showToast('Sauvegarde créée avec succès', 'success');
+                        } else {
+                            this.showToast('Erreur lors de la création de la sauvegarde', 'error');
+                        }
+                    } else {
+                        this.showToast('Système de sauvegarde non disponible', 'error');
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de la sauvegarde:', error);
+                    this.showToast('Erreur lors de la sauvegarde', 'error');
+                }
+            }
+
+            exportData() {
+                try {
+                    // Collecter toutes les données utilisateur
+                    const exportData = {
+                        exportDate: new Date().toISOString(),
+                        version: '1.0',
+                        userProfile: JSON.parse(localStorage.getItem('geccp-currentUser') || '{}'),
+                        userProfileDetails: JSON.parse(localStorage.getItem('userProfile') || '{}'),
+                        companyProfile: JSON.parse(localStorage.getItem('companyProfile') || '{}'),
+                        userPreferences: JSON.parse(localStorage.getItem('userPreferences') || '{}'),
+                        notificationPreferences: JSON.parse(localStorage.getItem('notificationPreferences') || '{}'),
+                        projects: JSON.parse(localStorage.getItem('projects') || '[]'),
+                        comments: JSON.parse(localStorage.getItem('comments') || '[]'),
+                        tasks: JSON.parse(localStorage.getItem('tasks') || '[]'),
+                        // Inclure d'autres données si elles existent
+                        geccData: JSON.parse(localStorage.getItem('gecc_data') || '{}'),
+                        currentSession: JSON.parse(localStorage.getItem('currentSession') || '{}')
+                    };
+
+                    // Créer le fichier JSON
+                    const jsonString = JSON.stringify(exportData, null, 2);
+                    const blob = new Blob([jsonString], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    
+                    // Télécharger le fichier
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `gecc-export-${new Date().toISOString().split('T')[0]}.json`;
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    
+                    this.showToast('Données exportées avec succès', 'success');
+                } catch (error) {
+                    console.error('Erreur lors de l\'export:', error);
+                    this.showToast('Erreur lors de l\'export des données', 'error');
+                }
+            }
+
+            importData(file) {
+                if (!file) return;
+
+                if (!confirm('Êtes-vous sûr de vouloir importer ces données ? Cela écrasera vos données actuelles.')) {
+                    return;
+                }
+
+                try {
+                    if (window.GECC && window.GECC.backup) {
+                        window.GECC.backup.import(file).then(() => {
+                            this.showToast('Données importées avec succès', 'success');
+                            // Recharger la page pour afficher les nouvelles données
+                            setTimeout(() => window.location.reload(), 1500);
+                        }).catch(error => {
+                            console.error('Erreur lors de l\'import:', error);
+                            this.showToast('Erreur lors de l\'import: ' + error.message, 'error');
+                        });
+                    } else {
+                        // Fallback: import manuel
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            try {
+                                const data = JSON.parse(e.target.result);
+                                localStorage.setItem('gecc_data', JSON.stringify(data));
+                                this.showToast('Données importées avec succès', 'success');
+                                setTimeout(() => window.location.reload(), 1500);
+                            } catch (error) {
+                                this.showToast('Fichier invalide', 'error');
+                            }
+                        };
+                        reader.readAsText(file);
+                    }
+                } catch (error) {
+                    console.error('Erreur lors de l\'import:', error);
+                    this.showToast('Erreur lors de l\'import', 'error');
+                }
+            }
+
+            deleteAllData() {
+                if (!confirm('Êtes-vous sûr de vouloir réinitialiser votre compte ? Cette action supprimera votre profil et vos préférences, mais conservera vos projets.')) {
+                    return;
+                }
+
+                if (!confirm('Dernière chance ! Votre profil et vos préférences seront réinitialisés aux valeurs par défaut.')) {
+                    return;
+                }
+
+                try {
+                    // Supprimer les données utilisateur (profil, préférences, entreprise)
+                    localStorage.removeItem('geccp-currentUser');
+                    localStorage.removeItem('userProfile');
+                    localStorage.removeItem('companyProfile');
+                    localStorage.removeItem('userPreferences');
+                    localStorage.removeItem('notificationPreferences');
+                    localStorage.removeItem('currentSession');
+                    
+                    // Conserver les projets, commentaires et tâches (selon l'étape 38)
+                    // localStorage.removeItem('projects'); // CONSERVÉ
+                    // localStorage.removeItem('comments'); // CONSERVÉ
+                    // localStorage.removeItem('tasks'); // CONSERVÉ
+                    
+                    // Supprimer les autres données temporaires
+                    localStorage.removeItem('gecc_session');
+                    localStorage.removeItem('gecc_backup');
+                    
+                    this.showToast('Compte réinitialisé avec succès', 'success');
+                    
+                    // Rediriger vers la page de connexion
+                    setTimeout(() => {
+                        window.location.href = 'landing.html';
+                    }, 2000);
+                } catch (error) {
+                    console.error('Erreur lors de la réinitialisation:', error);
+                    this.showToast('Erreur lors de la réinitialisation', 'error');
+                }
+            }
+
+            updateBackupStatus(message) {
+                const statusElement = document.getElementById('backupStatus');
+                if (statusElement) {
+                    const textElement = statusElement.querySelector('.status-text');
+                    if (textElement) {
+                        textElement.textContent = message;
+                    }
+                }
+            }
+
+            // ========================================
+            // MÉTHODES POUR LES NOUVEAUX ONGLETS
+            // ========================================
+
+            // Sauvegarder le profil
+            saveProfile() {
+                const formData = new FormData(document.getElementById('profileForm'));
+                const profileData = Object.fromEntries(formData);
+                
+                // Validation
+                if (!profileData.fullName || profileData.fullName.trim().length < 2) {
+                    this.showToast('Le nom complet est requis (min 2 caractères)', 'error');
+                    return;
+                }
+                
+                try {
+                    // Sauvegarder dans localStorage
+                    localStorage.setItem('userProfile', JSON.stringify(profileData));
+                    this.showToast('Profil sauvegardé avec succès', 'success');
+                } catch (error) {
+                    console.error('Erreur lors de la sauvegarde du profil:', error);
+                    this.showToast('Erreur lors de la sauvegarde', 'error');
+                }
+            }
+
+            // Sauvegarder l'entreprise
+            saveCompany() {
+                const formData = new FormData(document.getElementById('companyForm'));
+                const companyData = Object.fromEntries(formData);
+                
+                try {
+                    // Sauvegarder dans localStorage
+                    localStorage.setItem('companyProfile', JSON.stringify(companyData));
+                    this.showToast('Informations entreprise sauvegardées', 'success');
+                } catch (error) {
+                    console.error('Erreur lors de la sauvegarde de l\'entreprise:', error);
+                    this.showToast('Erreur lors de la sauvegarde', 'error');
+                }
+            }
+
+            // Sauvegarder la sécurité (changement de mot de passe)
+            saveSecurity() {
+                const formData = new FormData(document.getElementById('securityForm'));
+                const securityData = Object.fromEntries(formData);
+                
+                // Validation
+                if (!securityData.currentPassword) {
+                    this.showToast('Le mot de passe actuel est requis', 'error');
+                    return;
+                }
+                
+                if (!securityData.newPassword || securityData.newPassword.length < 6) {
+                    this.showToast('Le nouveau mot de passe doit contenir au moins 6 caractères', 'error');
+                    return;
+                }
+                
+                if (securityData.newPassword !== securityData.confirmPassword) {
+                    this.showToast('Les mots de passe ne correspondent pas', 'error');
+                    return;
+                }
+                
+                try {
+                    // En production, vérifier le mot de passe actuel et hasher le nouveau
+                    // Pour le MVP, on sauvegarde directement
+                    const userData = JSON.parse(localStorage.getItem('geccp-currentUser') || '{}');
+                    userData.password = securityData.newPassword;
+                    userData.updatedAt = new Date().toISOString();
+                    
+                    localStorage.setItem('geccp-currentUser', JSON.stringify(userData));
+                    this.showToast('Mot de passe mis à jour avec succès', 'success');
+                    
+                    // Réinitialiser le formulaire
+                    document.getElementById('securityForm').reset();
+                } catch (error) {
+                    console.error('Erreur lors du changement de mot de passe:', error);
+                    this.showToast('Erreur lors du changement de mot de passe', 'error');
+                }
+            }
+
+            // Réinitialiser le formulaire de profil
+            resetProfileForm() {
+                if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire de profil ?')) {
+                    document.getElementById('profileForm').reset();
+                    this.loadUserData();
+                    this.showToast('Formulaire de profil réinitialisé', 'info');
+                }
+            }
+
+            // Réinitialiser le formulaire d'entreprise
+            resetCompanyForm() {
+                if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire d\'entreprise ?')) {
+                    document.getElementById('companyForm').reset();
+                    this.loadCompanyData();
+                    this.showToast('Formulaire d\'entreprise réinitialisé', 'info');
+                }
+            }
+
+            // Réinitialiser le formulaire de sécurité
+            resetSecurityForm() {
+                if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire de sécurité ?')) {
+                    document.getElementById('securityForm').reset();
+                    this.showToast('Formulaire de sécurité réinitialisé', 'info');
+                }
+            }
+
+            // Charger les données utilisateur
+            loadUserData() {
+                try {
+                    const userData = JSON.parse(localStorage.getItem('geccp-currentUser') || '{}');
+                    const profileData = JSON.parse(localStorage.getItem('userProfile') || '{}');
+                    
+                    // Remplir le formulaire de profil
+                    document.getElementById('profileFullName').value = userData.fullName || profileData.fullName || '';
+                    document.getElementById('profileEmail').value = userData.email || profileData.email || '';
+                    document.getElementById('profileJobTitle').value = userData.jobTitle || profileData.jobTitle || '';
+                    document.getElementById('profilePhone').value = userData.phone || profileData.phone || '';
+                    
+                    // Charger l'avatar s'il existe
+                    if (userData.avatarBase64 || profileData.avatarBase64) {
+                        const avatarPreview = document.getElementById('avatarPreview');
+                        avatarPreview.innerHTML = `<img src="${userData.avatarBase64 || profileData.avatarBase64}" alt="Avatar">`;
+                    }
+                } catch (error) {
+                    console.error('Erreur lors du chargement des données utilisateur:', error);
+                }
+            }
+
+            // Charger les données d'entreprise
+            loadCompanyData() {
+                try {
+                    const companyData = JSON.parse(localStorage.getItem('companyProfile') || '{}');
+                    
+                    // Remplir le formulaire d'entreprise
+                    document.getElementById('companyName').value = companyData.name || '';
+                    document.getElementById('companyAddress').value = companyData.address || '';
+                    document.getElementById('companyWebsite').value = companyData.website || '';
+                    document.getElementById('companyPhone').value = companyData.phone || '';
+                    document.getElementById('companyVatNumber').value = companyData.vatNumber || '';
+                    
+                    // Charger le logo s'il existe
+                    if (companyData.logoBase64) {
+                        const logoPreview = document.getElementById('logoPreview');
+                        logoPreview.innerHTML = `<img src="${companyData.logoBase64}" alt="Logo">`;
+                    }
+                } catch (error) {
+                    console.error('Erreur lors du chargement des données d\'entreprise:', error);
+                }
+            }
+
+            showToast(message, type = 'success') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                toast.className = `toast ${type}`;
+                toast.textContent = message;
+                
+                container.appendChild(toast);
+                
+                // Show toast
+                setTimeout(() => toast.classList.add('show'), 100);
+                
+                // Hide toast
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                    setTimeout(() => container.removeChild(toast), 300);
+                }, 3000);
+            }
+        }
+
+        // ========================================
+        // FONCTIONS GLOBALES POUR L'UPLOAD
+        // ========================================
+
+        // Gérer l'upload d'avatar
+        function handleAvatarUpload() {
+            const fileInput = document.getElementById('profileAvatar');
+            const preview = document.getElementById('avatarPreview');
+            
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Vérifier la taille (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('Le fichier est trop volumineux (max 2MB)');
+                        return;
+                    }
+                    
+                    // Vérifier le type
+                    if (!file.type.startsWith('image/')) {
+                        alert('Veuillez sélectionner un fichier image');
+                        return;
+                    }
+                    
+                    // Convertir en base64
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `<img src="${e.target.result}" alt="Avatar">`;
+                        
+                        // Sauvegarder l'avatar en base64
+                        const userData = JSON.parse(localStorage.getItem('geccp-currentUser') || '{}');
+                        userData.avatarBase64 = e.target.result;
+                        localStorage.setItem('geccp-currentUser', JSON.stringify(userData));
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Supprimer l'avatar
+        function removeAvatar() {
+            const preview = document.getElementById('avatarPreview');
+            const fileInput = document.getElementById('profileAvatar');
+            
+            preview.innerHTML = '<div class="avatar-placeholder">👤</div>';
+            fileInput.value = '';
+            
+            // Supprimer l'avatar des données
+            const userData = JSON.parse(localStorage.getItem('geccp-currentUser') || '{}');
+            delete userData.avatarBase64;
+            localStorage.setItem('geccp-currentUser', JSON.stringify(userData));
+        }
+
+        // Gérer l'upload de logo
+        function handleLogoUpload() {
+            const fileInput = document.getElementById('companyLogo');
+            const preview = document.getElementById('logoPreview');
+            
+            fileInput.addEventListener('change', function(e) {
+                const file = e.target.files[0];
+                if (file) {
+                    // Vérifier la taille (max 2MB)
+                    if (file.size > 2 * 1024 * 1024) {
+                        alert('Le fichier est trop volumineux (max 2MB)');
+                        return;
+                    }
+                    
+                    // Vérifier le type
+                    if (!file.type.startsWith('image/')) {
+                        alert('Veuillez sélectionner un fichier image');
+                        return;
+                    }
+                    
+                    // Convertir en base64
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.innerHTML = `<img src="${e.target.result}" alt="Logo">`;
+                        
+                        // Sauvegarder le logo en base64
+                        const companyData = JSON.parse(localStorage.getItem('companyProfile') || '{}');
+                        companyData.logoBase64 = e.target.result;
+                        localStorage.setItem('companyProfile', JSON.stringify(companyData));
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Supprimer le logo
+        function removeLogo() {
+            const preview = document.getElementById('logoPreview');
+            const fileInput = document.getElementById('companyLogo');
+            
+            preview.innerHTML = '<div class="logo-placeholder">🏢</div>';
+            fileInput.value = '';
+            
+            // Supprimer le logo des données
+            const companyData = JSON.parse(localStorage.getItem('companyProfile') || '{}');
+            delete companyData.logoBase64;
+            localStorage.setItem('companyProfile', JSON.stringify(companyData));
+        }
+
+        // Initialize settings manager when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            const settingsManager = new SettingsManager();
+            
+            // Initialiser les gestionnaires d'upload
+            handleAvatarUpload();
+            handleLogoUpload();
+            
+            // Charger les données au démarrage
+            settingsManager.loadUserData();
+            settingsManager.loadCompanyData();
+        });
+    </script>
+    <script src="js/theme-manager.js"></script>
+    <script src="js/profile-integration.js"></script>
+    <script src="js/backup-manager.js"></script>
+</body>
+</html>

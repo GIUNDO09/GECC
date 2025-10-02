@@ -1,0 +1,57 @@
+### Test des routes d'authentification GECC
+
+### 1. Health Check
+GET http://localhost:3000/health
+
+### 2. Inscription (Signup)
+POST http://localhost:3000/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123",
+  "fullName": "Test User",
+  "role": "architect",
+  "companyName": "Test Company",
+  "jobTitle": "Test Architect"
+}
+
+### 3. Connexion (Login)
+POST http://localhost:3000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+### 4. Profil utilisateur (avec token)
+GET http://localhost:3000/api/auth/me
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 5. Mise à jour du profil
+PATCH http://localhost:3000/api/auth/me
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+Content-Type: application/json
+
+{
+  "fullName": "Test User Updated",
+  "companyName": "Updated Company",
+  "jobTitle": "Senior Architect",
+  "avatarUrl": "https://example.com/avatar.jpg"
+}
+
+### 6. Renouveler le token
+POST http://localhost:3000/api/auth/refresh
+Content-Type: application/json
+
+{
+  "refreshToken": "YOUR_REFRESH_TOKEN_HERE"
+}
+
+### 7. Déconnexion
+POST http://localhost:3000/api/auth/logout
+Authorization: Bearer YOUR_ACCESS_TOKEN_HERE
+
+### 8. Documentation API
+GET http://localhost:3000/api/docs

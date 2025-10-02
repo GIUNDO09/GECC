@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion - Plateforme BTP</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .auth-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+            overflow: hidden;
+            width: 100%;
+            max-width: 450px;
+            animation: slideUp 0.6s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .auth-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        .auth-header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .auth-header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .auth-tabs {
+            display: flex;
+            background: #f8f9fa;
+        }
+
+        .auth-tab {
+            flex: 1;
+            padding: 20px;
+            text-align: center;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-weight: 500;
+            font-size: 15px;
+            color: #6c757d;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .auth-tab.active {
+            background: white;
+            color: #495057;
+            font-weight: 600;
+        }
+
+        .auth-tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .auth-tab:hover:not(.active) {
+            background: #e9ecef;
+        }
+
+        .auth-content {
+            padding: 40px 30px;
+        }
+
+        .auth-form {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .auth-form.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #495057;
+            font-size: 14px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 15px;
+            background: #f8f9fa;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+            background: white;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        .form-group input::placeholder {
+            color: #6c757d;
+        }
+
+        .btn-auth {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .btn-auth:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-auth:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .message {
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 500;
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        .message.error {
+            background: #fff5f5;
+            color: #c53030;
+            border: 1px solid #feb2b2;
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .message.success {
+            background: #f0fff4;
+            color: #22543d;
+            border: 1px solid #9ae6b4;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .back-link a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .loading {
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .spinner {
+            border: 2px solid #f3f3f3;
+            border-top: 2px solid #667eea;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            .auth-container {
+                margin: 10px;
+                max-width: none;
+            }
+
+            .auth-header {
+                padding: 30px 20px;
+            }
+
+            .auth-header h1 {
+                font-size: 24px;
+            }
+
+            .auth-content {
+                padding: 30px 20px;
+            }
+
+            .auth-tab {
+                padding: 15px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>🏗️ Plateforme BTP</h1>
+            <p>Gestion de projets de construction</p>
+        </div>
+
+        <div class="auth-tabs">
+            <button class="auth-tab active" onclick="switchAuthMode('login')">Connexion</button>
+            <button class="auth-tab" onclick="switchAuthMode('register')">Inscription</button>
+        </div>
+
+        <div class="auth-content">
+            <!-- Messages -->
+            <div id="errorMessage" class="message error" style="display: none;"></div>
+            <div id="successMessage" class="message success" style="display: none;"></div>
+
+            <!-- Formulaire de Connexion -->
+            <form id="loginForm" class="auth-form active">
+                <div class="form-group">
+                    <label for="loginEmail">📧 Email</label>
+                    <input type="email" id="loginEmail" name="email" placeholder="exemple@email.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">🔒 Mot de passe</label>
+                    <input type="password" id="loginPassword" name="password" placeholder="Votre mot de passe" required>
+                </div>
+                <button type="submit" class="btn-auth" id="loginBtn">
+                    Se connecter
+                </button>
+                <div class="loading" id="loginLoading">
+                    <div class="spinner"></div>
+                    Connexion en cours...
+                </div>
+            </form>
+            
+            <!-- Formulaire d'Inscription -->
+            <form id="registerForm" class="auth-form">
+                    <div class="form-group">
+                    <label for="registerName">👤 Nom complet</label>
+                    <input type="text" id="registerName" name="name" placeholder="Jean Dupont" required>
+                </div>
+                            <div class="form-group">
+                    <label for="registerEmail">📧 Email</label>
+                    <input type="email" id="registerEmail" name="email" placeholder="exemple@email.com" required>
+                </div>
+                        <div class="form-group">
+                    <label for="registerPassword">🔒 Mot de passe</label>
+                    <input type="password" id="registerPassword" name="password" placeholder="Minimum 6 caractères" required minlength="6">
+                </div>
+                        <div class="form-group">
+                    <label for="registerRole">💼 Rôle</label>
+                    <select id="registerRole" name="role" required>
+                        <option value="">Sélectionnez votre rôle</option>
+                        <option value="architect">Architecte</option>
+                        <option value="bct">BCT (Bureau de Contrôle Technique)</option>
+                        <option value="bet">BET (Bureau d'Études Techniques)</option>
+                        <option value="entreprise">Entreprise</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn-auth" id="registerBtn">
+                    Créer un compte
+                </button>
+                <div class="loading" id="registerLoading">
+                    <div class="spinner"></div>
+                    Création du compte...
+                </div>
+            </form>
+            
+            <div class="back-link">
+                <a href="landing.html">← Retour à l'accueil</a>
+            </div>
+            </div>
+        </div>
+    
+    <script src="js/api-client.js"></script>
+    <script>
+        // ========================================
+        // GESTION DE L'AUTHENTIFICATION API
+        // ========================================
+
+        class AuthManager {
+            constructor() {
+                this.currentMode = 'login';
+                this.initializeEventListeners();
+                this.checkExistingSession();
+            }
+
+            initializeEventListeners() {
+                // Event listeners pour les formulaires
+                document.getElementById('loginForm').addEventListener('submit', (e) => this.handleLogin(e));
+                document.getElementById('registerForm').addEventListener('submit', (e) => this.handleRegister(e));
+            }
+
+            async checkExistingSession() {
+                // Vérifier s'il y a déjà une session active via l'API
+                if (window.apiClient && window.apiClient.isAuthenticated()) {
+                    try {
+                        const result = await window.apiClient.getCurrentUser();
+                        if (result.success) {
+                            console.log('👤 Session existante trouvée, redirection vers le dashboard');
+                            window.location.href = 'dashboard.html';
+                        }
+                    } catch (error) {
+                        console.error('❌ Erreur lors de la vérification de la session:', error);
+                        window.apiClient.clearSession();
+                    }
+                }
+            }
+
+            switchAuthMode(mode) {
+                this.currentMode = mode;
+                
+                // Mettre à jour les onglets
+                document.querySelectorAll('.auth-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                });
+                document.querySelector(`[onclick="switchAuthMode('${mode}')"]`).classList.add('active');
+                
+                // Mettre à jour les formulaires
+                document.querySelectorAll('.auth-form').forEach(form => {
+                    form.classList.remove('active');
+                });
+                document.getElementById(`${mode}Form`).classList.add('active');
+                
+                // Masquer les messages
+                this.hideMessages();
+            }
+
+            async handleLogin(e) {
+                e.preventDefault();
+                this.showLoading('login');
+                this.hideMessages();
+
+                try {
+                    const formData = new FormData(e.target);
+                    const email = formData.get('email').trim();
+                    const password = formData.get('password').trim();
+
+                    if (!email || !password) {
+                        throw new Error('Tous les champs sont obligatoires');
+                    }
+
+                    // Utiliser l'API pour l'authentification
+                    const result = await window.apiClient.login(email, password);
+                    
+                    if (!result.success) {
+                        throw new Error(result.error);
+                    }
+
+                    // Mettre à jour localRepository si disponible
+                    if (typeof localRepository !== 'undefined') {
+                        localRepository.setCurrentUser(result.user);
+                    }
+                    
+                    this.showSuccess('Connexion réussie ! Redirection...');
+                    
+                    // Rediriger vers le dashboard après un délai
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+
+                } catch (error) {
+                    this.showError(error.message);
+                } finally {
+                    this.hideLoading('login');
+                }
+            }
+
+            async handleRegister(e) {
+                e.preventDefault();
+                this.showLoading('register');
+                this.hideMessages();
+
+                try {
+                    const formData = new FormData(e.target);
+                    const fullName = formData.get('name').trim();
+                    const email = formData.get('email').trim();
+                    const password = formData.get('password').trim();
+                    const role = formData.get('role');
+
+                    // Validation
+                    if (!fullName || !email || !password || !role) {
+                        throw new Error('Tous les champs sont obligatoires');
+                    }
+
+                    if (password.length < 6) {
+                        throw new Error('Le mot de passe doit contenir au moins 6 caractères');
+                    }
+
+                    // Utiliser l'API pour l'inscription
+                    const userData = {
+                        email,
+                        password,
+                        fullName,
+                        role,
+                        companyName: '', // Optionnel
+                        jobTitle: '' // Optionnel
+                    };
+
+                    const result = await window.apiClient.signup(userData);
+                    
+                    if (!result.success) {
+                        throw new Error(result.error);
+                    }
+
+                    // Mettre à jour localRepository si disponible
+                    if (typeof localRepository !== 'undefined') {
+                        localRepository.setCurrentUser(result.user);
+                    }
+                    
+                    this.showSuccess('Compte créé avec succès ! Redirection...');
+                    
+                    // Rediriger vers le dashboard après un délai
+                    setTimeout(() => {
+                        window.location.href = 'dashboard.html';
+                    }, 1500);
+
+                } catch (error) {
+                    this.showError(error.message);
+                } finally {
+                    this.hideLoading('register');
+                }
+            }
+
+            authenticateUser(email, password) {
+                // Récupérer les données depuis le stockage GECC
+                const geccData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+                const users = geccData.users || [];
+                
+                return users.find(user => 
+                    user.email.toLowerCase() === email.toLowerCase() && 
+                    user.password === password
+                );
+            }
+
+            emailExists(email) {
+                // Récupérer les données depuis le stockage GECC
+                const geccData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+                const users = geccData.users || [];
+                
+                return users.some(user => user.email.toLowerCase() === email.toLowerCase());
+            }
+
+            createUser(name, email, password, role) {
+                // Récupérer les données depuis le stockage GECC
+                const geccData = JSON.parse(localStorage.getItem('gecc_data') || '{}');
+                const users = geccData.users || [];
+                
+                const newUser = {
+                    id: Date.now().toString(),
+                    name: name,
+                    email: email.toLowerCase(),
+                    password: password,
+                    role: role,
+                    createdAt: new Date().toISOString()
+                };
+
+                users.push(newUser);
+                
+                // Sauvegarder dans le stockage GECC
+                geccData.users = users;
+                localStorage.setItem('gecc_data', JSON.stringify(geccData));
+                
+                return newUser;
+            }
+
+            createSession(user) {
+                const session = {
+                    id: user.id,
+                    name: user.name,
+                    email: user.email,
+                    role: user.role
+                };
+                
+                localStorage.setItem('currentSession', JSON.stringify(session));
+            }
+
+            showError(message) {
+                const errorDiv = document.getElementById('errorMessage');
+                errorDiv.textContent = '❌ ' + message;
+                errorDiv.style.display = 'block';
+                
+                // Masquer après 5 secondes
+                setTimeout(() => {
+                    errorDiv.style.display = 'none';
+                }, 5000);
+            }
+
+            showSuccess(message) {
+                const successDiv = document.getElementById('successMessage');
+                successDiv.textContent = '✅ ' + message;
+                successDiv.style.display = 'block';
+            }
+
+            hideMessages() {
+                document.getElementById('errorMessage').style.display = 'none';
+                document.getElementById('successMessage').style.display = 'none';
+            }
+
+            showLoading(formType) {
+                document.getElementById(`${formType}Btn`).disabled = true;
+                document.getElementById(`${formType}Loading`).style.display = 'block';
+            }
+
+            hideLoading(formType) {
+                document.getElementById(`${formType}Btn`).disabled = false;
+                document.getElementById(`${formType}Loading`).style.display = 'none';
+            }
+        }
+
+        // ========================================
+        // FONCTIONS GLOBALES
+        // ========================================
+
+        function switchAuthMode(mode) {
+            window.authManager.switchAuthMode(mode);
+        }
+
+        // ========================================
+        // INITIALISATION
+        // ========================================
+
+        document.addEventListener('DOMContentLoaded', () => {
+            window.authManager = new AuthManager();
+            console.log('✅ Système d\'authentification initialisé');
+        });
+    </script>
+</body>
+</html>
