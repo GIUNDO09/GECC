@@ -272,6 +272,12 @@ jest.config.js
 # ========================================
 # GECC SPECIFIC
 # ========================================
+# Fichiers vidéo volumineux
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wmv
 # Configuration locale
 config/local.js
 config/local.json
